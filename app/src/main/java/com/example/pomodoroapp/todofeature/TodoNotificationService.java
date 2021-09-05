@@ -11,7 +11,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.pomodoroapp.R;
 
-import static com.example.pomodoroapp.todofeature.App.CHANNEL_ID;
+import static com.example.pomodoroapp.MainActivity.App.CHANNEL_ID;
 
 public class TodoNotificationService extends Service {
 

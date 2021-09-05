@@ -3,9 +3,13 @@ package com.example.pomodoroapp;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Application;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -40,4 +44,27 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public static class App extends Application {
+        public static final String CHANNEL_ID = "NotificationServiceChannel";
+
+        @Override
+        public void onCreate() {
+            super.onCreate();
+
+            createNotificationChannel();
+        }
+
+        private void createNotificationChannel() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel serviceChannel = new NotificationChannel(
+                        CHANNEL_ID,
+                        "Notification Service Channel",
+                        NotificationManager.IMPORTANCE_DEFAULT
+                );
+
+                NotificationManager manager = getSystemService(NotificationManager.class);
+                manager.createNotificationChannel(serviceChannel);
+            }
+        }
+    }
 }
