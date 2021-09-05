@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.pomodoroapp">
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application
+        android:name=".todofeature.App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.PomodoroApp">
+
+        <activity android:name=".todofeature.CalendarActivity"
+            android:theme="@style/DialogTheme">
+        </activity>
+        <activity android:name=".todofeature.TimeActivity"
+            android:theme="@style/DialogTheme"/>
+        <activity android:name=".todofeature.TodoMakerEdit"
+            android:configChanges="orientation"
+            android:parentActivityName=".todofeature.MainActivityTodo"
+            android:screenOrientation="portrait" />
+        <activity android:name=".todofeature.TodoMaker"
+            android:configChanges="orientation"
+            android:parentActivityName=".todofeature.MainActivityTodo"
+            android:screenOrientation="portrait" />
+        <activity android:name=".todofeature.MainActivityTodo"
+            android:configChanges="orientation"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+
+
+        <activity android:name=".schedulemanager.ScheduleMakerEdit"
+            android:configChanges="orientation"
+            android:parentActivityName=".schedulemanager.MainActivityScheduleManager"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".schedulemanager.ShowTaskActivity"
+            android:theme="@style/DialogTheme">
+        </activity>
+        <activity android:name=".schedulemanager.ScheduleModal" />
+        <activity android:name=".schedulemanager.ScheduleAdapter" />
+        <activity
+            android:name=".schedulemanager.TimeActivity"
+            android:theme="@style/DialogTheme" />
+        <activity
+            android:name=".schedulemanager.CalendarActivity"
+            android:theme="@style/DialogTheme" />
+        <activity
+            android:name=".schedulemanager.ScheduleMaker"
+            android:configChanges="orientation"
+            android:parentActivityName=".schedulemanager.MainActivityScheduleManager"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".schedulemanager.MainActivityScheduleManager"
+            android:configChanges="orientation"
+            android:exported="true"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
+
+
+        <activity android:name=".upcomingtasks.CreatePomodoroEdit"
+            android:configChanges="orientation"
+            android:parentActivityName=".upcomingtasks.MainActivityUpcomingPomodoros"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name=".upcomingtasks.PomodoroTimer" />
+        <activity
+            android:name=".upcomingtasks.TimeActivity"
+            android:theme="@style/DialogTheme"
+            android:configChanges="orientation"
+            android:label="Time"
+            android:parentActivityName=".upcomingtasks.CreatePomodoro"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".upcomingtasks.CalendarActivity"
+            android:theme="@style/DialogTheme"
+            android:configChanges="orientation"
+            android:label="Calender"
+            android:parentActivityName=".upcomingtasks.CreatePomodoro"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".upcomingtasks.CreatePomodoro"
+            android:configChanges="orientation"
+            android:label="Create Task"
+            android:parentActivityName=".upcomingtasks.MainActivityUpcomingPomodoros"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".upcomingtasks.MainActivityUpcomingPomodoros"
+            android:configChanges="orientation"
+            android:exported="true"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
+
+
+        <activity android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service android:name=".schedulemanager.ExampleService" />
+        <receiver android:name=".schedulemanager.StopNotification" />
+        <receiver android:name=".schedulemanager.CancelNotification" />
+        <service android:name=".todofeature.TodoNotificationService" />
+        <receiver android:name=".todofeature.StopNotification" />
+    </application>
+</manifest>

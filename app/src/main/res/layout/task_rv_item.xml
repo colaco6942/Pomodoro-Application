@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:backgroundTint="@color/red"
+    android:elevation="8dp"
+    app:cardCornerRadius="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--text view for our task name-->
+        <TextView
+            android:id="@+id/idTaskName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Task Name"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <!--text view for our task date-->
+        <TextView
+            android:id="@+id/idTaskDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/idTaskName"
+            android:padding="5dp"
+            android:text="Date "
+            android:textColor="@color/white" />
+
+        <ImageButton
+            android:id="@+id/idBtnDeleteTask"
+            android:layout_width="39dp"
+            android:layout_height="37dp"
+            android:layout_alignRight="@id/idTaskName"
+            android:backgroundTint="@color/red"
+            android:onClick="deleteTask"
+            android:src="@drawable/ic_baseline_delete_24"
+            app:tint="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/idBtnStartTask"
+            android:layout_width="50dp"
+            android:layout_height="36dp"
+            android:layout_alignBaseline="@id/idTaskName"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/red"
+            android:onClick="startTask"
+            android:src="@drawable/ic_baseline_not_started_24"
+            app:tint="#8BC34A" />
+
+        <ImageButton
+            android:id="@+id/idBtnEditTask"
+            android:layout_width="39dp"
+            android:layout_height="37dp"
+            android:layout_marginLeft="320dp"
+            android:backgroundTint="@color/red"
+            android:src="@drawable/ic_baseline_edit_24"
+            app:tint="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0" />
+
+        <TextView
+            android:id="@+id/idTaskPomodoroInterval"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/idBtnDeleteTask"
+            android:gravity="end"
+            android:padding="5dp"
+            android:text="Interval "
+            android:textColor="@color/white" />
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".MainActivity">
+
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/linearLayout2"-->
+    <!--        android:layout_width="413dp"-->
+    <!--        android:layout_height="92dp"-->
+    <!--        android:background="#F1E9E9"-->
+    <!--        android:orientation="vertical"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/addNewTask"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintVertical_bias="0.0">-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/upcomingTasksText"-->
+    <!--            android:layout_width="303dp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginTop="28dp"-->
+    <!--            android:fontFamily="serif"-->
+    <!--            android:text="Upcoming Tasks"-->
+    <!--            android:textAlignment="center"-->
+    <!--            android:textAllCaps="false"-->
+    <!--            android:textColor="@color/black"-->
+    <!--            android:textSize="24sp" />-->
+
+    <!--    </LinearLayout>-->
+
+
+    <EditText
+        android:id="@+id/addNewTask"
+        android:layout_width="241dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="59dp"
+        android:background="@drawable/rounded_edit_text"
+        android:ems="10"
+        android:fontFamily="serif"
+        android:hint="Name your task"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        android:textColorHint="#817D7D"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/addIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
+        android:background="@color/white"
+        android:onClick="newTaskActivity"
+        android:src="@drawable/ic_baseline_add_box_24"
+        app:tint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.423"
+        app:layout_constraintStart_toEndOf="@+id/addNewTask"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="410dp"
+        android:layout_height="498dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addNewTask">
+
+        <!--button for adding data to recycler view-->
+
+        <!--button for saving data to shared prefs-->
+
+        <!--recycler view to display our data-->
+
+        <ImageView
+            android:id="@+id/noTaskImage"
+            android:layout_width="167dp"
+            android:layout_height="143dp"
+            android:layout_centerInParent="true"
+            app:tint = "#BDBABA"
+            app:srcCompat="@drawable/ic_outline_assignment_24" />
+
+        <TextView
+            android:id="@+id/noTaskTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/noTaskImage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="-30dp"
+            android:text="No Tasks Created"
+            android:textSize="20dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/idRVCourses"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="0dp" />
+
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
