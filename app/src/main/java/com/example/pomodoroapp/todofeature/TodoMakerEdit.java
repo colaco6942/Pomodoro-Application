@@ -8,12 +8,15 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pomodoroapp.R;
+import com.example.pomodoroapp.upcomingtasks.CreatePomodoro;
 import com.google.android.material.snackbar.Snackbar;
 
 public class TodoMakerEdit extends AppCompatActivity {
@@ -51,6 +54,13 @@ public class TodoMakerEdit extends AppCompatActivity {
         Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
         upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
+        Spinner mySpinner = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(TodoMakerEdit.this, R.layout.spinner_item,
+                getResources().getStringArray(R.array.repeatInterval));
+
+        myAdapter.setDropDownViewResource(R.layout.spinner_item);
+        mySpinner.setAdapter(myAdapter);
     }
 
     public void openCalenderActivity(View view)
