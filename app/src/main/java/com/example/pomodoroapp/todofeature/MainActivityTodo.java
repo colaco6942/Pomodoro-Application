@@ -8,7 +8,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -23,7 +29,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 public class MainActivityTodo extends AppCompatActivity {
@@ -38,6 +43,7 @@ public class MainActivityTodo extends AppCompatActivity {
     private int position;
     private String todoRepeatInterval;
     private boolean todoRepeat;
+    private ImageButton buttonSort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,40 @@ public class MainActivityTodo extends AppCompatActivity {
         upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         todoRV = findViewById(R.id.idRVTodo);
+
+        buttonSort = (ImageButton) findViewById(R.id.buttonSort);
+        buttonSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popup = new PopupMenu(MainActivityTodo.this, buttonSort);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater().inflate(R.menu.sort_menu, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.menu_a_to_z:
+                                // sort a to z
+                                Collections.sort(todoModalArrayList, TodoModal.TodoAZComparator);
+                                adapter.notifyDataSetChanged();
+                                saveData();
+                                return true;
+
+                            case R.id.menu_z_to_a:
+                                // sort z to a
+                                Collections.sort(todoModalArrayList, TodoModal.TodoZAComparator);
+                                adapter.notifyDataSetChanged();
+                                saveData();
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                });
+                popup.show();//showing popup menu
+            }
+        });
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(todoRV);
