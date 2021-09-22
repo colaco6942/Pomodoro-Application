@@ -32,6 +32,8 @@ public class MainActivityTodo extends AppCompatActivity {
     private ArrayList<TodoModal> todoModalArrayList;
     private RecyclerView todoRV;
     private int position;
+    private String todoRepeatInterval;
+    private boolean todoRepeat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +144,8 @@ public class MainActivityTodo extends AppCompatActivity {
                 todoTime = data.getStringExtra("todoTime");
                 todoTimeHour = data.getStringExtra("todoTimeHour");
                 todoTimeMinute = data.getStringExtra("todoTimeMinute");
-                todoModalArrayList.add(new TodoModal(todoName, todoDate, todoTime));
+                todoRepeatInterval = "Everyday";
+                todoModalArrayList.add(new TodoModal(todoName, todoDate, todoTime, todoRepeatInterval, false));
                 // notifying adapter when new data added.
                 adapter.notifyItemInserted(todoModalArrayList.size());
                 // saving the arraylist created
@@ -157,7 +160,9 @@ public class MainActivityTodo extends AppCompatActivity {
         todoName = data.getStringExtra("todoNameEdit");
         todoDate = data.getStringExtra("todoDateEdit");
         todoTime = data.getStringExtra("todoTimeEdit");
-        todoModalArrayList.set(position, new TodoModal(todoName, todoDate, todoTime));
+        todoRepeat = data.getBooleanExtra("todoRepeatEdit", false);
+        todoRepeatInterval = data.getStringExtra("todoRepeatIntervalEdit");
+        todoModalArrayList.set(position, new TodoModal(todoName, todoDate, todoTime, todoRepeatInterval, todoRepeat));
         adapter.notifyDataSetChanged();
         saveData();
     }

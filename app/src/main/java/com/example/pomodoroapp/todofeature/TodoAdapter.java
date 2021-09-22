@@ -1,10 +1,14 @@
 package com.example.pomodoroapp.todofeature;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.transition.Explode;
+import android.transition.Slide;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +17,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pomodoroapp.R;
@@ -20,6 +26,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 import static android.content.Context.ALARM_SERVICE;
@@ -39,14 +46,14 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TodoAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // below line is to inflate our layout.
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.todo_list_view, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TodoAdapter.ViewHolder holder, int position) {
         // setting data to our views of recycler view.
         TodoModal modal = TodoModalArrayList.get(position);
         holder.todoNameTV.setText(modal.getTodoName());
@@ -140,6 +147,8 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
                     intent.putExtra("todoNameNotification", modal.getTodoName());
                     intent.putExtra("todoStartTimeNotification", modal.getTodoTimeStart());
                     intent.putExtra("todoDateNotification", modal.getTodoDateStart());
+                    intent.putExtra("todoRepeatEnableNotification", modal.getTodoRepeat());
+                    intent.putExtra("todoRepeatIntervalNotification", modal.getTodoRepeatInterval());
                     pendingIntent[0] = PendingIntent.getForegroundService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 //        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1000 * 5, pendingIntent[0]);
                     alarmManager.setExact(AlarmManager.RTC_WAKEUP, objCalendar.getTimeInMillis(), pendingIntent[0]);
@@ -155,6 +164,8 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
                     intent.putExtra("todoTaskName", modal.getTodoName());
                     intent.putExtra("todoTaskDateStart", modal.getTodoDateStart());
                     intent.putExtra("todoTaskTimeStart", modal.getTodoTimeStart());
+                    intent.putExtra("todoTaskRepeat", modal.getTodoRepeat());
+                    intent.putExtra("todoTaskRepeatInterval", modal.getTodoRepeatInterval());
                     view.getContext().startActivity(intent);
                 }
             });

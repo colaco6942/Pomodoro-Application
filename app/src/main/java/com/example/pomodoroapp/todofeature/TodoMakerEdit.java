@@ -8,12 +8,15 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.example.pomodoroapp.R;
 import com.example.pomodoroapp.upcomingtasks.CreatePomodoro;
@@ -29,7 +32,10 @@ public class TodoMakerEdit extends AppCompatActivity {
     private String TimeTextMinute;
     private String TimeTextHour;
     private String TimeText = "";
+    private String todoRepeatInterval;
+    private boolean repeatEnabled;
     private int position;
+    private SwitchCompat repeatSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,8 @@ public class TodoMakerEdit extends AppCompatActivity {
         todoName = intent.getStringExtra("todoTaskName");
         dateText = intent.getStringExtra("todoTaskDateStart");
         TimeText = intent.getStringExtra("todoTaskTimeStart");
+        todoRepeatInterval = intent.getStringExtra("todoTaskRepeatInterval");
+        repeatEnabled = intent.getBooleanExtra("todoTaskRepeat", false);
 
         todoNameET = (EditText) findViewById(R.id.todoName);
         DateView = findViewById(R.id.dateText);
@@ -55,12 +63,28 @@ public class TodoMakerEdit extends AppCompatActivity {
         upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
+        repeatSwitch = (SwitchCompat) findViewById(R.id.switch1);
+        repeatSwitch.setChecked(repeatEnabled);
+
         Spinner mySpinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(TodoMakerEdit.this, R.layout.spinner_item,
                 getResources().getStringArray(R.array.repeatInterval));
-
         myAdapter.setDropDownViewResource(R.layout.spinner_item);
         mySpinner.setAdapter(myAdapter);
+        int todoRepeatIntervalPosition = myAdapter.getPosition(todoRepeatInterval);
+        mySpinner.setSelection(todoRepeatIntervalPosition);
+
+        mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+                Object item = adapterView.getItemAtPosition(pos);
+                todoRepeatInterval = String.valueOf(item);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
     }
 
     public void openCalenderActivity(View view)
@@ -108,6 +132,9 @@ public class TodoMakerEdit extends AppCompatActivity {
             snackbar.show();
         }
         else {
+            SwitchCompat enableSwitch = (SwitchCompat) findViewById(R.id.switch1);
+            repeatEnabled = enableSwitch.isChecked();
+
             Intent intentTask = new Intent(this, MainActivityTodo.class);
             intentTask.putExtra("todoNameEdit", todoName);
             intentTask.putExtra("todoDateEdit", dateText);
@@ -115,6 +142,8 @@ public class TodoMakerEdit extends AppCompatActivity {
             intentTask.putExtra("todoTimeHour", TimeTextHour);
             intentTask.putExtra("todoTimeMinute", TimeTextMinute);
             intentTask.putExtra("taskValueAdapterPositionEdit", position);
+            intentTask.putExtra("todoRepeatIntervalEdit", todoRepeatInterval);
+            intentTask.putExtra("todoRepeatEdit", repeatEnabled);
             startActivity(intentTask);
         }
     }

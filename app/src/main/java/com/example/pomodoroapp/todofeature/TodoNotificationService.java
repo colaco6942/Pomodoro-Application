@@ -24,20 +24,24 @@ public class TodoNotificationService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         String todoName = intent.getStringExtra("todoNameNotification");
         String todoStartTime = intent.getStringExtra("todoStartTimeNotification");
+        boolean repeatEnable = intent.getBooleanExtra("todoRepeatEnableNotification", false);
+        String repeatInterval = intent.getStringExtra("todoRepeatIntervalNotification");
         Intent notificationIntent = new Intent(this, MainActivityTodo.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent stopNotificationIntent = new Intent(this, StopNotification.class);
-        PendingIntent stopPendingIntent = PendingIntent.getBroadcast(this, 0,
-                stopNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        stopNotificationIntent.putExtra("todoRepeatEnableNotification" , repeatEnable);
+        stopNotificationIntent.putExtra("todoRepeatIntervalNotification", repeatInterval);
+        stopNotificationIntent.putExtra("todoStartTimeNotification", todoStartTime);
+        PendingIntent stopPendingIntent = PendingIntent.getBroadcast(this, 0, stopNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle(todoName)
                 .setContentText("It is time for your task")
                 .setSmallIcon(R.drawable.ic_baseline_notifications_active_24)
                 .setContentIntent(pendingIntent)
-                .addAction(R.drawable.ic_baseline_delete_24, "Cancel Task", stopPendingIntent)
+                .addAction(R.drawable.ic_baseline_delete_24, "Done Task", stopPendingIntent)
                 .build();
 
         startForeground(1, notification);
