@@ -104,8 +104,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         // creating variables for our views.
-        private ImageButton deleteButton, editTaskButton;
-        private Button startNotificationButton;
+        private ImageButton deleteButton, editTaskButton, startNotificationButton;
         private TextView todoNameTV, todoDateTV, todoTimeTV;
 
         public ViewHolder(@NonNull View itemView) {

@@ -67,17 +67,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0" />
 
-        <Button
+        <ImageButton
             android:id="@+id/idBtnStartNotification"
-            android:layout_width="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Start"
-            android:layout_marginTop="40dp"
-            android:layout_height="40dp"
-            android:backgroundTint="#B6A1A1"
+            android:layout_width="39dp"
+            android:layout_height="37dp"
+            android:layout_marginLeft="280dp"
+            android:backgroundTint="#E1DFDF"
+            android:src="@drawable/ic_baseline_notifications_active_24"
+            app:tint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:tint="@color/black" />
+            app:layout_constraintHorizontal_bias="0.0" />
 
     </RelativeLayout>
 
