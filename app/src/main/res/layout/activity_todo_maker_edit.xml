@@ -190,11 +190,58 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="409dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="600dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewPreference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="618dp"
+            android:text="Set Preference"
+            android:textColor="#03A9F4"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/buttonHigh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="688dp"
+            android:backgroundTint="#C6C6C6"
+            android:text="High"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginRight="128dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/buttonLow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="688dp"
+            android:backgroundTint="#C6C6C6"
+            android:text="Low"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="128dp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="650dp"
+        android:layout_marginTop="850dp"
         android:backgroundTint="#C6C6C6"
         android:text="Confirm"
         android:onClick="confirmTodo"
@@ -207,7 +254,7 @@
             android:id="@+id/divider2"
             android:layout_width="409dp"
             android:layout_height="1dp"
-            android:layout_marginTop="740dp"
+            android:layout_marginTop="940dp"
             android:background="?android:attr/listDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

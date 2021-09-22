@@ -7,9 +7,11 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -33,6 +35,9 @@ public class TodoMakerEdit extends AppCompatActivity {
     private String TimeTextHour;
     private String TimeText = "";
     private String todoRepeatInterval;
+    private String todoPreference;
+    private Button buttonHigh;
+    private Button buttonLow;
     private boolean repeatEnabled;
     private int position;
     private SwitchCompat repeatSwitch;
@@ -47,9 +52,12 @@ public class TodoMakerEdit extends AppCompatActivity {
         dateText = intent.getStringExtra("todoTaskDateStart");
         TimeText = intent.getStringExtra("todoTaskTimeStart");
         todoRepeatInterval = intent.getStringExtra("todoTaskRepeatInterval");
+        todoPreference = intent.getStringExtra("todoTaskPreference");
         repeatEnabled = intent.getBooleanExtra("todoTaskRepeat", false);
 
         todoNameET = (EditText) findViewById(R.id.todoName);
+        buttonHigh = (Button) findViewById(R.id.buttonHigh);
+        buttonLow = (Button) findViewById(R.id.buttonLow);
         DateView = findViewById(R.id.dateText);
         TimeView = findViewById(R.id.timeText);
         todoNameET.setText(todoName);
@@ -85,6 +93,32 @@ public class TodoMakerEdit extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
+
+        if (todoPreference.equals("High")){
+            buttonHigh.setBackgroundTintList(getResources().getColorStateList(R.color.red));
+        }
+        else {
+            buttonLow.setBackgroundTintList(getResources().getColorStateList(R.color.teal_200));
+        }
+
+        buttonHigh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    buttonHigh.setBackgroundTintList(getResources().getColorStateList(R.color.red));
+                    buttonLow.setBackgroundTintList(getResources().getColorStateList(R.color.gray));
+                    todoPreference = "High";
+            }
+        });
+
+        buttonLow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                buttonLow.setBackgroundTintList(getResources().getColorStateList(R.color.teal_200));
+                buttonHigh.setBackgroundTintList(getResources().getColorStateList(R.color.gray));
+                todoPreference = "Low";
+            }
+        });
+
     }
 
     public void openCalenderActivity(View view)
@@ -144,6 +178,7 @@ public class TodoMakerEdit extends AppCompatActivity {
             intentTask.putExtra("taskValueAdapterPositionEdit", position);
             intentTask.putExtra("todoRepeatIntervalEdit", todoRepeatInterval);
             intentTask.putExtra("todoRepeatEdit", repeatEnabled);
+            intentTask.putExtra("todoPreferenceEdit", todoPreference);
             startActivity(intentTask);
         }
     }

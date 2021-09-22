@@ -6,15 +6,17 @@ public class TodoModal {
     private String todoName;
     private String todoDateStart;
     private String todoTimeStart;
+    private String todoPreference;
     private String todoRepeatInterval;
     private boolean todoRepeat;
 
-    public TodoModal(String todoName, String todoDateStart, String todoTimeStart, String todoRepeatInterval, boolean todoRepeat){
+    public TodoModal(String todoName, String todoDateStart, String todoTimeStart, String todoRepeatInterval, boolean todoRepeat, String todoPreference){
         this.todoName = todoName;
         this.todoDateStart = todoDateStart;
         this.todoTimeStart = todoTimeStart;
         this.todoRepeatInterval = todoRepeatInterval;
         this.todoRepeat = todoRepeat;
+        this.todoPreference = todoPreference;
     }
 
     public static Comparator<TodoModal> TodoAZComparator = new Comparator<TodoModal>() {
@@ -31,10 +33,17 @@ public class TodoModal {
         }
     };
 
-    public static Comparator<TodoModal> TodoDateAscendingComparator = new Comparator<TodoModal>() {
+    public static Comparator<TodoModal> TodoHighToLowComparator = new Comparator<TodoModal>() {
         @Override
         public int compare(TodoModal modal1, TodoModal modal2) {
-            return modal1.getTodoDateStart().compareTo(modal2.getTodoDateStart());
+            return modal1.getTodoPreference().compareTo(modal2.getTodoPreference());
+        }
+    };
+
+    public static Comparator<TodoModal> TodoLowToHighComparator = new Comparator<TodoModal>() {
+        @Override
+        public int compare(TodoModal modal1, TodoModal modal2) {
+            return modal2.getTodoPreference().compareTo(modal1.getTodoPreference());
         }
     };
 
@@ -45,6 +54,8 @@ public class TodoModal {
     public String getTodoTimeStart(){return todoTimeStart;}
 
     public String getTodoRepeatInterval(){return todoRepeatInterval;}
+
+    public String getTodoPreference(){return todoPreference;}
 
     public boolean getTodoRepeat(){return todoRepeat;}
 }

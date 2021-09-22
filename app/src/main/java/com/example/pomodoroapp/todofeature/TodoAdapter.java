@@ -104,8 +104,8 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         // creating variables for our views.
-        private ImageButton deleteButton, editTaskButton, startNotificationButton;
-        private TextView todoNameTV, todoDateTV, todoTimeTV;
+        private ImageButton deleteButton, editTaskButton, startNotificationButton, buttonSort;
+        private TextView todoNameTV, todoDateTV, todoTimeTV, textView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -117,6 +117,8 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
             deleteButton = itemView.findViewById(R.id.idBtnDeleteTodo);
             editTaskButton = itemView.findViewById(R.id.idBtnEditTodo);
             startNotificationButton = itemView.findViewById(R.id.idBtnStartNotification);
+            textView = itemView.findViewById(R.id.sortView);
+            buttonSort = itemView.findViewById(R.id.buttonSort);
             final PendingIntent[] pendingIntent = new PendingIntent[1];
             AlarmManager alarmManager;
             alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
@@ -165,6 +167,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
                     intent.putExtra("todoTaskTimeStart", modal.getTodoTimeStart());
                     intent.putExtra("todoTaskRepeat", modal.getTodoRepeat());
                     intent.putExtra("todoTaskRepeatInterval", modal.getTodoRepeatInterval());
+                    intent.putExtra("todoTaskPreference", modal.getTodoPreference());
                     view.getContext().startActivity(intent);
                 }
             });
