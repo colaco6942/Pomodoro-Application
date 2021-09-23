@@ -61,6 +61,12 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         holder.todoNameTV.setText(modal.getTodoName());
         holder.todoDateTV.setText(modal.getTodoDateStart());
         holder.todoTimeTV.setText(modal.getTodoTimeStart());
+        if(modal.isNotificationState()){
+            holder.startNotificationButton.setImageTintList(context.getResources().getColorStateList(R.color.red));
+        }
+        else{
+            holder.startNotificationButton.setImageTintList(context.getResources().getColorStateList(R.color.black));
+        }
     }
 
     @Override
@@ -114,11 +120,21 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         }
     }
 
+    private boolean isNotificationOn(ImageButton startNotificationButton){
+        if(startNotificationButton.getImageTintList() == context.getResources().getColorStateList(R.color.red)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         // creating variables for our views.
         private ImageButton deleteButton, editTaskButton, startNotificationButton, buttonSort;
         private TextView todoNameTV, todoDateTV, todoTimeTV, textView;
+        private boolean isOn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -142,6 +158,22 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
                             .make(view, "       This Task will start in given time and date.", Snackbar.LENGTH_SHORT);
                     snackbar.show();
                     TodoModal modal = TodoModalArrayList.get(getAdapterPosition());
+
+                    if(isNotificationOn(startNotificationButton)){
+                        startNotificationButton.setImageTintList(context.getResources().getColorStateList(R.color.black));
+                        isOn = false;
+                    }
+                    else{
+                        startNotificationButton.setImageTintList(context.getResources().getColorStateList(R.color.red));
+                        isOn = true;
+                    }
+
+                    TodoModalArrayList.set(getAdapterPosition(), new TodoModal
+                            (modal.getTodoName(), modal.getTodoDateStart(), modal.getTodoTimeStart(), modal.getTodoRepeatInterval(), modal.getTodoRepeat(),
+                                    modal.getTodoPreference(), isOn));
+                    notifyDataSetChanged();
+                    saveData();
+
                     String timeText = modal.getTodoTimeStart();
                     String[] list = timeText.split(":");
                     String dateText = modal.getTodoDateStart();

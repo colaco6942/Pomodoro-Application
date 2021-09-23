@@ -9,14 +9,16 @@ public class TodoModal {
     private String todoPreference;
     private String todoRepeatInterval;
     private boolean todoRepeat;
+    private boolean notificationState;
 
-    public TodoModal(String todoName, String todoDateStart, String todoTimeStart, String todoRepeatInterval, boolean todoRepeat, String todoPreference){
+    public TodoModal(String todoName, String todoDateStart, String todoTimeStart, String todoRepeatInterval, boolean todoRepeat, String todoPreference, boolean notificationState){
         this.todoName = todoName;
         this.todoDateStart = todoDateStart;
         this.todoTimeStart = todoTimeStart;
         this.todoRepeatInterval = todoRepeatInterval;
         this.todoRepeat = todoRepeat;
         this.todoPreference = todoPreference;
+        this.notificationState = notificationState;
     }
 
     public static Comparator<TodoModal> TodoAZComparator = new Comparator<TodoModal>() {
@@ -47,6 +49,10 @@ public class TodoModal {
         }
     };
 
+    public void setNotificationState(boolean value) {
+        this.notificationState = value;
+    }
+
     public String getTodoName(){return todoName;}
 
     public String getTodoDateStart(){return todoDateStart;}
@@ -58,5 +64,7 @@ public class TodoModal {
     public String getTodoPreference(){return todoPreference;}
 
     public boolean getTodoRepeat(){return todoRepeat;}
+
+    public boolean isNotificationState(){return notificationState;}
 }
 

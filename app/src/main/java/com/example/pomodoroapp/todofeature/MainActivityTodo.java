@@ -48,6 +48,7 @@ public class MainActivityTodo extends AppCompatActivity {
     private int position;
     private String todoRepeatInterval;
     private boolean todoRepeat;
+    private boolean notificationState;
     private ImageButton buttonSort;
 
     @Override
@@ -227,7 +228,7 @@ public class MainActivityTodo extends AppCompatActivity {
                 todoTimeMinute = data.getStringExtra("todoTimeMinute");
                 todoPreference = "Low";
                 todoRepeatInterval = "Everyday";
-                todoModalArrayList.add(new TodoModal(todoName, todoDate, todoTime, todoRepeatInterval, false, todoPreference));
+                todoModalArrayList.add(new TodoModal(todoName, todoDate, todoTime, todoRepeatInterval, false, todoPreference, false));
                 // notifying adapter when new data added.
                 adapter.notifyItemInserted(todoModalArrayList.size());
                 // set visibility of sort view
@@ -247,7 +248,7 @@ public class MainActivityTodo extends AppCompatActivity {
         todoRepeat = data.getBooleanExtra("todoRepeatEdit", false);
         todoRepeatInterval = data.getStringExtra("todoRepeatIntervalEdit");
         todoPreference = data.getStringExtra("todoPreferenceEdit");
-        todoModalArrayList.set(position, new TodoModal(todoName, todoDate, todoTime, todoRepeatInterval, todoRepeat, todoPreference));
+        todoModalArrayList.set(position, new TodoModal(todoName, todoDate, todoTime, todoRepeatInterval, todoRepeat, todoPreference, false));
         adapter.notifyDataSetChanged();
         saveData();
     }
