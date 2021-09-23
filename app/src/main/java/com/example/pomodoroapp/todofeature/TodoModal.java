@@ -49,10 +49,6 @@ public class TodoModal {
         }
     };
 
-    public void setNotificationState(boolean value) {
-        this.notificationState = value;
-    }
-
     public String getTodoName(){return todoName;}
 
     public String getTodoDateStart(){return todoDateStart;}

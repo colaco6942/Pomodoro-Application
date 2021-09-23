@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.provider.SyncStateContract;
 import android.transition.Explode;
 import android.transition.Slide;
 import android.util.Log;
@@ -120,6 +121,18 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         }
     }
 
+    private boolean notificationOnIterator(){
+        TodoModal[] modal = new TodoModal[getItemCount()];
+        boolean isOn = false;
+        for(int i = 0; i < getItemCount(); i++){
+            modal[i] = TodoModalArrayList.get(i);
+            if (modal[i].isNotificationState()){
+                isOn = true;
+            }
+        }
+        return isOn;
+    }
+
     private boolean isNotificationOn(ImageButton startNotificationButton){
         if(startNotificationButton.getImageTintList() == context.getResources().getColorStateList(R.color.red)){
             return true;
@@ -154,49 +167,69 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
             startNotificationButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Snackbar snackbar = Snackbar
-                            .make(view, "       This Task will start in given time and date.", Snackbar.LENGTH_SHORT);
-                    snackbar.show();
                     TodoModal modal = TodoModalArrayList.get(getAdapterPosition());
 
-                    if(isNotificationOn(startNotificationButton)){
-                        startNotificationButton.setImageTintList(context.getResources().getColorStateList(R.color.black));
-                        isOn = false;
-                    }
-                    else{
-                        startNotificationButton.setImageTintList(context.getResources().getColorStateList(R.color.red));
-                        isOn = true;
-                    }
+                    if(!notificationOnIterator()){
+                        Snackbar snackbar = Snackbar
+                                .make(view, "       This Task will start in given time and date.", Snackbar.LENGTH_SHORT);
+                        snackbar.show();
 
-                    TodoModalArrayList.set(getAdapterPosition(), new TodoModal
-                            (modal.getTodoName(), modal.getTodoDateStart(), modal.getTodoTimeStart(), modal.getTodoRepeatInterval(), modal.getTodoRepeat(),
-                                    modal.getTodoPreference(), isOn));
-                    notifyDataSetChanged();
-                    saveData();
+                        if(isNotificationOn(startNotificationButton)){
+                            startNotificationButton.setImageTintList(context.getResources().getColorStateList(R.color.black));
+                            isOn = false;
+                        }
+                        else{
+                            startNotificationButton.setImageTintList(context.getResources().getColorStateList(R.color.red));
+                            isOn = true;
+                        }
 
-                    String timeText = modal.getTodoTimeStart();
-                    String[] list = timeText.split(":");
-                    String dateText = modal.getTodoDateStart();
-                    String[] dateList = dateText.split("-");
-                    Calendar objCalendar = Calendar.getInstance();
-                    objCalendar.set(Calendar.YEAR, Integer.parseInt(dateList[2]));
-                    objCalendar.set(Calendar.MONTH, Integer.parseInt(dateList[1]) - 1);
-                    objCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateList[0]));
-                    objCalendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(list[0]));
-                    objCalendar.set(Calendar.MINUTE, Integer.parseInt(list[1]));
-                    objCalendar.set(Calendar.SECOND, 0);
-                    objCalendar.set(Calendar.MILLISECOND, 0);
+                        TodoModalArrayList.set(getAdapterPosition(), new TodoModal
+                                (modal.getTodoName(), modal.getTodoDateStart(), modal.getTodoTimeStart(), modal.getTodoRepeatInterval(), modal.getTodoRepeat(),
+                                        modal.getTodoPreference(), isOn));
+                        notifyDataSetChanged();
+                        saveData();
+
+                        String timeText = modal.getTodoTimeStart();
+                        String[] list = timeText.split(":");
+                        String dateText = modal.getTodoDateStart();
+                        String[] dateList = dateText.split("-");
+                        Calendar objCalendar = Calendar.getInstance();
+                        objCalendar.set(Calendar.YEAR, Integer.parseInt(dateList[2]));
+                        objCalendar.set(Calendar.MONTH, Integer.parseInt(dateList[1]) - 1);
+                        objCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateList[0]));
+                        objCalendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(list[0]));
+                        objCalendar.set(Calendar.MINUTE, Integer.parseInt(list[1]));
+                        objCalendar.set(Calendar.SECOND, 0);
+                        objCalendar.set(Calendar.MILLISECOND, 0);
 //                    objCalendar.set(Calendar.AM_PM, getAM_PM(list[0]));
 
-                    Intent intent = new Intent(context, TodoNotificationService.class);
-                    intent.putExtra("todoNameNotification", modal.getTodoName());
-                    intent.putExtra("todoStartTimeNotification", modal.getTodoTimeStart());
-                    intent.putExtra("todoDateNotification", modal.getTodoDateStart());
-                    intent.putExtra("todoRepeatEnableNotification", modal.getTodoRepeat());
-                    intent.putExtra("todoRepeatIntervalNotification", modal.getTodoRepeatInterval());
-                    pendingIntent[0] = PendingIntent.getForegroundService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                        Intent intent = new Intent(context, TodoNotificationService.class);
+                        intent.putExtra("todoNameNotification", modal.getTodoName());
+                        intent.putExtra("todoStartTimeNotification", modal.getTodoTimeStart());
+                        intent.putExtra("todoDateNotification", modal.getTodoDateStart());
+                        intent.putExtra("todoRepeatEnableNotification", modal.getTodoRepeat());
+                        intent.putExtra("todoRepeatIntervalNotification", modal.getTodoRepeatInterval());
+                        pendingIntent[0] = PendingIntent.getForegroundService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 //        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1000 * 5, pendingIntent[0]);
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, objCalendar.getTimeInMillis(), pendingIntent[0]);
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, objCalendar.getTimeInMillis(), pendingIntent[0]);
+                    }
+
+                    else if(isNotificationOn(startNotificationButton)){
+                        Intent serviceIntent = new Intent(context, TodoNotificationService.class);
+                        context.startService(serviceIntent);
+                        startNotificationButton.setImageTintList(context.getResources().getColorStateList(R.color.black));
+                        isOn = false;
+                        TodoModalArrayList.set(getAdapterPosition(), new TodoModal
+                                (modal.getTodoName(), modal.getTodoDateStart(), modal.getTodoTimeStart(), modal.getTodoRepeatInterval(), modal.getTodoRepeat(),
+                                        modal.getTodoPreference(), isOn));
+                        notifyDataSetChanged();
+                        saveData();
+                    }
+                    else{
+                        Snackbar snackbar = Snackbar
+                                .make(view, "       You can choose one notification at time", Snackbar.LENGTH_SHORT);
+                        snackbar.show();
+                    }
                 }
             });
 
