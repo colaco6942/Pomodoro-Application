@@ -37,11 +37,13 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     // creating a variable for array list and context.
     private ArrayList<TodoModal> TodoModalArrayList;
     private Context context;
+    private View viewActivity;
 
     // creating a constructor for our variables.
-    public TodoAdapter(ArrayList<TodoModal> TodoModalArrayList, Context context) {
+    public TodoAdapter(ArrayList<TodoModal> TodoModalArrayList, Context context, View viewActivity) {
         this.TodoModalArrayList = TodoModalArrayList;
         this.context = context;
+        this.viewActivity = viewActivity;
     }
 
     @NonNull
@@ -92,6 +94,17 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         editor.apply();
     }
 
+    private void setVisibility(ImageButton buttonSort, TextView textView){
+        if (TodoModalArrayList.isEmpty()) {
+            buttonSort.setVisibility(View.INVISIBLE);
+            textView.setVisibility(View.INVISIBLE);
+        }
+        else{
+            buttonSort.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.VISIBLE);
+        }
+    }
+
     private int getAM_PM(String hourOfDayString){
         int hourOfDay = Integer.parseInt(hourOfDayString);
         if(hourOfDay < 12) {
@@ -117,8 +130,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
             deleteButton = itemView.findViewById(R.id.idBtnDeleteTodo);
             editTaskButton = itemView.findViewById(R.id.idBtnEditTodo);
             startNotificationButton = itemView.findViewById(R.id.idBtnStartNotification);
-            textView = itemView.findViewById(R.id.sortView);
-            buttonSort = itemView.findViewById(R.id.buttonSort);
+
             final PendingIntent[] pendingIntent = new PendingIntent[1];
             AlarmManager alarmManager;
             alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
@@ -177,9 +189,12 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
                 public void onClick(View view) {
                     Intent serviceIntent = new Intent(context, TodoNotificationService.class);
                     context.stopService(serviceIntent);
+                    textView = viewActivity.findViewById(R.id.sortView);
+                    buttonSort = viewActivity.findViewById(R.id.buttonSort);
                     TodoModalArrayList.remove(getAdapterPosition());
                     notifyItemRemoved(getAdapterPosition());
                     notifyItemRangeChanged(getAdapterPosition(), TodoModalArrayList.size());
+                    setVisibility(buttonSort,textView);
                     saveData();
                 }
             });

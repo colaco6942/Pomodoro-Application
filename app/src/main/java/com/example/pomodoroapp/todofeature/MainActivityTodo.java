@@ -44,6 +44,7 @@ public class MainActivityTodo extends AppCompatActivity {
     private TodoAdapter adapter;
     private ArrayList<TodoModal> todoModalArrayList;
     private RecyclerView todoRV;
+    private TextView textView;
     private int position;
     private String todoRepeatInterval;
     private boolean todoRepeat;
@@ -61,6 +62,7 @@ public class MainActivityTodo extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         todoRV = findViewById(R.id.idRVTodo);
         buttonSort = (ImageButton) findViewById(R.id.buttonSort);
+        textView = findViewById(R.id.sortView);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(todoRV);
@@ -117,6 +119,7 @@ public class MainActivityTodo extends AppCompatActivity {
             }
         });
 
+        setVisibility(buttonSort, textView);
 
         try {
             editTask();
@@ -126,9 +129,20 @@ public class MainActivityTodo extends AppCompatActivity {
         }
     }
 
+    private void setVisibility(ImageButton buttonSort, TextView textView){
+        if (todoModalArrayList.isEmpty()) {
+            buttonSort.setVisibility(View.INVISIBLE);
+            textView.setVisibility(View.INVISIBLE);
+        }
+        else {
+            buttonSort.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void buildRecyclerView() {
         // initializing our adapter class.
-        adapter = new TodoAdapter(todoModalArrayList, MainActivityTodo.this);
+        adapter = new TodoAdapter(todoModalArrayList, MainActivityTodo.this, this.getWindow().getDecorView().findViewById(android.R.id.content));
 
         // adding layout manager to our recycler view.
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -216,6 +230,8 @@ public class MainActivityTodo extends AppCompatActivity {
                 todoModalArrayList.add(new TodoModal(todoName, todoDate, todoTime, todoRepeatInterval, false, todoPreference));
                 // notifying adapter when new data added.
                 adapter.notifyItemInserted(todoModalArrayList.size());
+                // set visibility of sort view
+                setVisibility(buttonSort, textView);
                 // saving the arraylist created
                 saveData();
             }
