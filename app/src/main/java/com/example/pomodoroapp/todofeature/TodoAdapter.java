@@ -112,6 +112,16 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         }
     }
 
+    private void stopNotification(){
+        Intent intent = new Intent(context, TodoNotificationService.class);
+        final PendingIntent[] pendingIntent = new PendingIntent[1];
+        pendingIntent[0] = PendingIntent.getForegroundService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager;
+        alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent[0]);
+
+    }
+
     private int getAM_PM(String hourOfDayString){
         int hourOfDay = Integer.parseInt(hourOfDayString);
         if(hourOfDay < 12) {
@@ -215,8 +225,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
                     }
 
                     else if(isNotificationOn(startNotificationButton)){
-                        Intent serviceIntent = new Intent(context, TodoNotificationService.class);
-                        context.startService(serviceIntent);
+                        stopNotification();
                         startNotificationButton.setImageTintList(context.getResources().getColorStateList(R.color.black));
                         isOn = false;
                         TodoModalArrayList.set(getAdapterPosition(), new TodoModal
@@ -252,8 +261,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent serviceIntent = new Intent(context, TodoNotificationService.class);
-                    context.stopService(serviceIntent);
+                    stopNotification();
                     textView = viewActivity.findViewById(R.id.sortView);
                     buttonSort = viewActivity.findViewById(R.id.buttonSort);
                     TodoModalArrayList.remove(getAdapterPosition());
