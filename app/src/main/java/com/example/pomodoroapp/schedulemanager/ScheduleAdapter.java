@@ -30,11 +30,13 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     // creating a variable for array list and context.
     private ArrayList<ScheduleModal> scheduleModalArrayList;
     private Context context;
+    private View viewActivity;
 
     // creating a constructor for our variables.
-    public ScheduleAdapter(ArrayList<ScheduleModal> scheduleModalArrayList, Context context) {
+    public ScheduleAdapter(ArrayList<ScheduleModal> scheduleModalArrayList, Context context, View viewActivity) {
         this.scheduleModalArrayList = scheduleModalArrayList;
         this.context = context;
+        this.viewActivity = viewActivity;
     }
 
     @NonNull
@@ -84,6 +86,17 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         editor.apply();
     }
 
+    private void setVisibility(ImageButton buttonSort, TextView textView){
+        if (scheduleModalArrayList.isEmpty()) {
+            buttonSort.setVisibility(View.INVISIBLE);
+            textView.setVisibility(View.INVISIBLE);
+        }
+        else{
+            buttonSort.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.VISIBLE);
+        }
+    }
+
     private int getAM_PM(String hourOfDayString){
         int hourOfDay = Integer.parseInt(hourOfDayString);
         if(hourOfDay < 12) {
@@ -96,9 +109,9 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         // creating variables for our views.
-        private ImageButton deleteButton, editTaskButton, taskButton;
+        private ImageButton deleteButton, editTaskButton, taskButton, buttonSort;
         private Button startNotificationButton;
-        private TextView scheduleNameTV, scheduleDateTV;
+        private TextView scheduleNameTV, scheduleDateTV, sortView;
         private ArrayList<String> scheduleTasks;
 
         public ViewHolder(@NonNull View itemView) {
@@ -188,11 +201,14 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    sortView = viewActivity.findViewById(R.id.sortView);
+                    buttonSort = viewActivity.findViewById(R.id.buttonSort);
                     Intent serviceIntent = new Intent(context, ExampleService.class);
                     context.stopService(serviceIntent);
                     scheduleModalArrayList.remove(getAdapterPosition());
                     notifyItemRemoved(getAdapterPosition());
                     notifyItemRangeChanged(getAdapterPosition(), scheduleModalArrayList.size());
+                    setVisibility(buttonSort, sortView);
                     saveData();
                 }
             });

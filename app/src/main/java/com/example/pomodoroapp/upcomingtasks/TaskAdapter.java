@@ -28,11 +28,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     // creating a variable for array list and context.
     private ArrayList<TaskModal> taskModalArrayList;
     private Context context;
+    private View viewActivity;
 
     // creating a constructor for our variables.
-    public TaskAdapter(ArrayList<TaskModal> taskModalArrayList, Context context) {
+    public TaskAdapter(ArrayList<TaskModal> taskModalArrayList, Context context, View viewActivity) {
         this.taskModalArrayList = taskModalArrayList;
         this.context = context;
+        this.viewActivity = viewActivity;
     }
 
     @NonNull
@@ -102,12 +104,23 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         editor.apply();
     }
 
+    private void setVisibility(ImageButton buttonSort, TextView textView){
+        if (taskModalArrayList.isEmpty()) {
+            buttonSort.setVisibility(View.INVISIBLE);
+            textView.setVisibility(View.INVISIBLE);
+        }
+        else{
+            buttonSort.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.VISIBLE);
+        }
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         // creating variables for our views.
-        private TextView taskNameTV, taskDateTV, taskPomodoroIntervalTV;
+        private TextView taskNameTV, taskDateTV, taskPomodoroIntervalTV, sortView;
         private ImageButton deleteButton;
-        private ImageButton startTaskButton, editTaskButton;
+        private ImageButton startTaskButton, editTaskButton, buttonSort;
         private String pomoIntervalString;
         private CardView cardView;
 
@@ -165,9 +178,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    sortView = viewActivity.findViewById(R.id.sortView);
+                    buttonSort = viewActivity.findViewById(R.id.buttonSort);
                     taskModalArrayList.remove(getAdapterPosition());
                     notifyItemRemoved(getAdapterPosition());
                     notifyItemRangeChanged(getAdapterPosition(), taskModalArrayList.size());
+                    setVisibility(buttonSort, sortView);
                     saveData();
                 }
             });

@@ -8,10 +8,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,6 +51,8 @@ public class MainActivityUpcomingPomodoros extends AppCompatActivity {
     private TextView textView;
     private RecyclerView taskRV;
     private boolean longBreakEnable;
+    private TextView textViewSort;
+    private ImageButton buttonSort;
 
     // variable for our adapter class and array list
     private TaskAdapter adapter;
@@ -70,6 +74,8 @@ public class MainActivityUpcomingPomodoros extends AppCompatActivity {
         taskRV = findViewById(R.id.idRVCourses);
         imageView = findViewById(R.id.noTaskImage);
         textView = findViewById(R.id.noTaskTV);
+        buttonSort = (ImageButton) findViewById(R.id.buttonSort);
+        textViewSort = findViewById(R.id.sortView);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(taskRV);
@@ -81,6 +87,42 @@ public class MainActivityUpcomingPomodoros extends AppCompatActivity {
         // calling method to build
         // recycler view.
         buildRecyclerView();
+
+        buttonSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popup = new PopupMenu(MainActivityUpcomingPomodoros.this, buttonSort);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater().inflate(R.menu.sort_menu_two, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.menu_a_to_z:
+                                // sort a to z
+                                Collections.sort(taskModalArrayList, TaskModal.TaskAZComparator);
+                                adapter.notifyDataSetChanged();
+                                saveData();
+                                return true;
+
+                            case R.id.menu_z_to_a:
+                                // sort z to a
+                                Collections.sort(taskModalArrayList, TaskModal.TaskZAComparator);
+                                adapter.notifyDataSetChanged();
+                                saveData();
+                                return true;
+
+                            default:
+                                return false;
+                        }
+                    }
+                });
+                popup.show();//showing popup menu
+            }
+        });
+
+        setVisibility(buttonSort, textViewSort);
 
         if (taskModalArrayList.isEmpty()) {
             imageView.setVisibility(View.VISIBLE);
@@ -99,9 +141,20 @@ public class MainActivityUpcomingPomodoros extends AppCompatActivity {
         }
     }
 
+    private void setVisibility(ImageButton buttonSort, TextView textView){
+        if (taskModalArrayList.isEmpty()) {
+            buttonSort.setVisibility(View.INVISIBLE);
+            textView.setVisibility(View.INVISIBLE);
+        }
+        else {
+            buttonSort.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void buildRecyclerView() {
         // initializing our adapter class.
-        adapter = new TaskAdapter(taskModalArrayList, MainActivityUpcomingPomodoros.this);
+        adapter = new TaskAdapter(taskModalArrayList, MainActivityUpcomingPomodoros.this, this.getWindow().getDecorView().findViewById(android.R.id.content));
 
         // adding layout manager to our recycler view.
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -227,6 +280,8 @@ public class MainActivityUpcomingPomodoros extends AppCompatActivity {
                 taskModalArrayList.add(new TaskModal(taskNameEdt.getText().toString(), pomodoroDate, pomodoroInterval, pomodoroNumber, breakInterval, pomodoroLongBreak, longBreakEnable, taskColor));
                 // notifying adapter when new data added.
                 adapter.notifyItemInserted(taskModalArrayList.size());
+                // set visibility of sort view
+                setVisibility(buttonSort, textViewSort);
                 // saving the arraylist created
                 saveData();
             }

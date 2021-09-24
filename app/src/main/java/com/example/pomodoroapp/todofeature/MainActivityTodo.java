@@ -48,7 +48,6 @@ public class MainActivityTodo extends AppCompatActivity {
     private int position;
     private String todoRepeatInterval;
     private boolean todoRepeat;
-    private boolean notificationState;
     private ImageButton buttonSort;
 
     @Override

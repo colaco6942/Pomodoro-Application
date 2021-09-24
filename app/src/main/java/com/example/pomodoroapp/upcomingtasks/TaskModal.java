@@ -1,5 +1,7 @@
 package com.example.pomodoroapp.upcomingtasks;
 
+import java.util.Comparator;
+
 public class TaskModal {
     private String taskName;
     private String taskDate;
@@ -21,6 +23,20 @@ public class TaskModal {
         this.longBreakEnable = longBreakEnable;
         this.taskColor = taskColor;
     }
+
+    public static Comparator<TaskModal> TaskAZComparator = new Comparator<TaskModal>() {
+        @Override
+        public int compare(TaskModal modal1, TaskModal modal2) {
+            return modal1.getTaskName().compareTo(modal2.getTaskName());
+        }
+    };
+
+    public static Comparator<TaskModal> TaskZAComparator = new Comparator<TaskModal>() {
+        @Override
+        public int compare(TaskModal modal1, TaskModal modal2) {
+            return modal2.getTaskName().compareTo(modal1.getTaskName());
+        }
+    };
 
     public String getTaskName(){
         return taskName;

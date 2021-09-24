@@ -1,6 +1,9 @@
 package com.example.pomodoroapp.schedulemanager;
 
+import com.example.pomodoroapp.schedulemanager.ScheduleModal;
+
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class ScheduleModal {
     private String scheduleName;
@@ -18,6 +21,20 @@ public class ScheduleModal {
         this.scheduleTimeEnd = scheduleTimeEnd;
         this.scheduleTasks = scheduleTasks;
     }
+
+    public static Comparator<ScheduleModal> ScheduleAZComparator = new Comparator<ScheduleModal>() {
+        @Override
+        public int compare(ScheduleModal modal1, ScheduleModal modal2) {
+            return modal1.getScheduleName().compareTo(modal2.getScheduleName());
+        }
+    };
+
+    public static Comparator<ScheduleModal> ScheduleZAComparator = new Comparator<ScheduleModal>() {
+        @Override
+        public int compare(ScheduleModal modal1, ScheduleModal modal2) {
+            return modal2.getScheduleName().compareTo(modal1.getScheduleName());
+        }
+    };
 
     public String getScheduleName(){return scheduleName;}
 
