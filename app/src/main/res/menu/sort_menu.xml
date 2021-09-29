@@ -13,5 +13,8 @@
     <item
         android:id="@+id/menu_high_to_low"
         android:title="High to Low" />
+    <item
+        android:id="@+id/menu_time"
+        android:title="Time" />
 
 </menu>

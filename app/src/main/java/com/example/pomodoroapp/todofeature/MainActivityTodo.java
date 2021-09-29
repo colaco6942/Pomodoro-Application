@@ -26,7 +26,9 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class MainActivityTodo extends AppCompatActivity {
@@ -95,6 +97,13 @@ public class MainActivityTodo extends AppCompatActivity {
                     case R.id.menu_high_to_low:
                         // sort from high preference to low preference
                         todoModalArrayList.sort(TodoModal.TodoHighToLowComparator);
+                        adapter.notifyDataSetChanged();
+                        saveData();
+                        return true;
+
+                    case R.id.menu_time:
+                        // sort according to time
+                        todoModalArrayList.sort(TodoModal.TodoTimeComparator);
                         adapter.notifyDataSetChanged();
                         saveData();
                         return true;

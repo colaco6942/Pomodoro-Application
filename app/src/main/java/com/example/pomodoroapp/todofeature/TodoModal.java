@@ -1,5 +1,6 @@
 package com.example.pomodoroapp.todofeature;
 
+import java.util.Calendar;
 import java.util.Comparator;
 
 public class TodoModal {
@@ -29,6 +30,8 @@ public class TodoModal {
 
     public static Comparator<TodoModal> TodoLowToHighComparator = (modal1, modal2) -> modal2.getTodoPreference().compareTo(modal1.getTodoPreference());
 
+    public static Comparator<TodoModal> TodoTimeComparator = (modal1, modal2) -> (int) (getTimeInMilli(modal1) - getTimeInMilli(modal2));
+
     public String getTodoName(){return todoName;}
 
     public String getTodoDateStart(){return todoDateStart;}
@@ -42,5 +45,22 @@ public class TodoModal {
     public boolean getTodoRepeat(){return todoRepeat;}
 
     public boolean isNotificationState(){return notificationState;}
+
+    private static long getTimeInMilli(TodoModal modal){
+        String timeText = modal.getTodoTimeStart();
+        String[] list = timeText.split(":");
+        String dateText = modal.getTodoDateStart();
+        String[] dateList = dateText.split("-");
+        Calendar objCalendar = Calendar.getInstance();
+        objCalendar.set(Calendar.YEAR, Integer.parseInt(dateList[2]));
+        objCalendar.set(Calendar.MONTH, Integer.parseInt(dateList[1]) - 1);
+        objCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateList[0]));
+        objCalendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(list[0]));
+        objCalendar.set(Calendar.MINUTE, Integer.parseInt(list[1]));
+        objCalendar.set(Calendar.SECOND, 0);
+        objCalendar.set(Calendar.MILLISECOND, 0);
+
+        return objCalendar.getTimeInMillis();
+    }
 }
 

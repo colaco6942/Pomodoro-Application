@@ -26,6 +26,7 @@ public class CreatePomodoroEdit extends AppCompatActivity {
     // Initializing variables
     private EditText timeView;
     private EditText dateView;
+    private EditText titleView;
     private  TextView textView;
     private Switch longBreakEnableSwitch;
     private RadioGroup radioGroup;
@@ -63,6 +64,8 @@ public class CreatePomodoroEdit extends AppCompatActivity {
         dateText = intent.getStringExtra("date");
         dateView = findViewById(R.id.dateText);
         dateView.setText(dateText);
+        titleView = findViewById(R.id.nameText);
+        titleView.setText(titleName);
         longBreak = intent.getStringExtra("longBreak");
         pomodoroString = intent.getStringExtra("pomodoroNumber");
         breakIntervalString = intent.getStringExtra("break");
@@ -230,6 +233,7 @@ public class CreatePomodoroEdit extends AppCompatActivity {
     public void taskDone(View view){
         Switch longBreakEnableSwitch = (Switch) findViewById(R.id.switch1);
          longBreakEnabled = longBreakEnableSwitch.isChecked();
+         titleName = titleView.getText().toString();
 
         Intent intentTask = new Intent(this, MainActivityUpcomingPomodoros.class);
         intentTask.putExtra("taskNameEdit", titleName);
