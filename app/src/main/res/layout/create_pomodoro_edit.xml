@@ -371,7 +371,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@android:drawable/checkbox_off_background"
-                android:buttonTint="#FFEB3B"
+                android:buttonTint="@color/red"
                 android:onClick="chooseColor" />
 
             <RadioButton

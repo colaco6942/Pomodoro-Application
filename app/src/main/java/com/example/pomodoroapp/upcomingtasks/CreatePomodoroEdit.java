@@ -171,8 +171,8 @@ public class CreatePomodoroEdit extends AppCompatActivity {
         }
 
         else if(selectedId == R.id.radioButtonYellow){
-            textView.setText("Yellow");
-            taskColor = R.color.yellow;
+            textView.setText("Red");
+            taskColor = R.color.red;
         }
 
         else if(selectedId == R.id.radioButtonBlack){
