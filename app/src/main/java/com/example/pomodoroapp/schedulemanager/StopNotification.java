@@ -36,10 +36,8 @@ public class StopNotification extends BroadcastReceiver {
             context.stopService(serviceIntent);
         }
         else {
-            String timeText = scheduleStartTime;
-            String[] list = timeText.split(":");
-            String dateText = formattedDate;
-            String[] dateList = dateText.split("-");
+            String[] list = scheduleStartTime.split(":");
+            String[] dateList = formattedDate.split("-");
             Calendar objCalendar = Calendar.getInstance();
             objCalendar.set(Calendar.YEAR, Integer.parseInt(dateList[2]));
             objCalendar.set(Calendar.MONTH, Integer.parseInt(dateList[1]) - 1);
@@ -56,7 +54,6 @@ public class StopNotification extends BroadcastReceiver {
             intent.putExtra("scheduleEndDateNotification", scheduleEndDate);
             pendingIntent[0] = PendingIntent.getForegroundService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            //        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1000 * 5, pendingIntent[0]);
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, objCalendar.getTimeInMillis(), pendingIntent[0]);
         }
     }

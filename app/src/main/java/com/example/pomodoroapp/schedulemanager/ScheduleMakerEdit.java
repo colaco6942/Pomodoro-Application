@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -32,17 +31,12 @@ public class ScheduleMakerEdit extends AppCompatActivity {
     private EditText endingDateView;
     private String endingDateText;
     private EditText startTimeView;
-    private String startTimeTextMinute;
-    private String startTimeTextHour;
     private String startTimeText;
     private EditText endTimeView;
-    private String endTimeTextMinute;
-    private String endTimeTextHour;
     private String endTimeText;
     private ArrayList<String> items;
     private ArrayAdapter<String> itemsAdapter;
     ListView listView;
-    private ImageButton imageButton;
     private int position;
 
     @Override
@@ -50,6 +44,7 @@ public class ScheduleMakerEdit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_maker_edit);
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + "Make Your Schedule" + "</font>"));
         Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
@@ -57,7 +52,7 @@ public class ScheduleMakerEdit extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         Intent intent = getIntent();
 
-        scheduleNameET = (EditText) findViewById(R.id.scheduleName);
+        scheduleNameET = findViewById(R.id.scheduleName);
         startingDateView = findViewById(R.id.startingDateText);
         endingDateView = findViewById(R.id.dateTextEnding);
         startTimeView = findViewById(R.id.timeTextStarting);
@@ -78,13 +73,8 @@ public class ScheduleMakerEdit extends AppCompatActivity {
         endTimeView.setText(endTimeText);
 
         listView = findViewById(R.id.listView);
-        imageButton = findViewById(R.id.addIcon);
-        imageButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                addNewTask(view);
-            }
-        });
+        ImageButton imageButton = findViewById(R.id.addIcon);
+        imageButton.setOnClickListener(this::addNewTask);
 
         itemsAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, items);
         listView.setAdapter(itemsAdapter);
@@ -105,16 +95,13 @@ public class ScheduleMakerEdit extends AppCompatActivity {
     }
 
     private void setUpListViewListener() {
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Context context = getApplicationContext();
-                Toast.makeText(context, "Item Removed", Toast.LENGTH_SHORT).show();
+        listView.setOnItemLongClickListener((adapterView, view, i, l) -> {
+            Context context = getApplicationContext();
+            Toast.makeText(context, "Item Removed", Toast.LENGTH_SHORT).show();
 
-                items.remove(i);
-                itemsAdapter.notifyDataSetChanged();
-                return true;
-            }
+            items.remove(i);
+            itemsAdapter.notifyDataSetChanged();
+            return true;
         });
     }
 
@@ -161,16 +148,16 @@ public class ScheduleMakerEdit extends AppCompatActivity {
         }
         else if (requestCode == 3){
             if (resultCode == RESULT_OK){
-                startTimeTextHour = data.getStringExtra("timeValueHour");
-                startTimeTextMinute = data.getStringExtra("timeValueMinute");
+                String startTimeTextHour = data.getStringExtra("timeValueHour");
+                String startTimeTextMinute = data.getStringExtra("timeValueMinute");
                 startTimeText = startTimeTextHour + ":" + startTimeTextMinute;
                 startTimeView.setText(startTimeText);
             }
         }
         else if (requestCode == 4){
             if (resultCode == RESULT_OK){
-                endTimeTextHour = data.getStringExtra("timeValueHour");
-                endTimeTextMinute = data.getStringExtra("timeValueMinute");
+                String endTimeTextHour = data.getStringExtra("timeValueHour");
+                String endTimeTextMinute = data.getStringExtra("timeValueMinute");
                 endTimeText = endTimeTextHour + ":" + endTimeTextMinute;
                 endTimeView.setText(endTimeText);
             }

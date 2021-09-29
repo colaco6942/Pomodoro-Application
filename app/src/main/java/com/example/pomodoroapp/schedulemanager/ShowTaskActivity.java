@@ -17,31 +17,24 @@ import java.util.Date;
 
 public class ShowTaskActivity extends AppCompatActivity {
 
-    private ListView listView;
-    private ArrayList<String> items;
-    private ArrayAdapter<String> itemsAdapter;
-    private TextView textView;
-    private String timeStart;
-    private String timeEnd;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_task);
-        listView = findViewById(R.id.listViewTask);
-        textView = findViewById(R.id.taskTimeText);
+        ListView listView = findViewById(R.id.listViewTask);
+        TextView textView = findViewById(R.id.taskTimeText);
 
         Intent intent = getIntent();
-        items = intent.getStringArrayListExtra("scheduleTaskList");
-        timeStart = intent.getStringExtra("scheduleTaskTimeStart");
-        timeEnd = intent.getStringExtra("scheduleTaskTimeEnd");
+        ArrayList<String> items = intent.getStringArrayListExtra("scheduleTaskList");
+        String timeStart = intent.getStringExtra("scheduleTaskTimeStart");
+        String timeEnd = intent.getStringExtra("scheduleTaskTimeEnd");
         timeStart = convert24to12(timeStart);
         timeEnd = convert24to12(timeEnd);
 
         textView.setText(timeStart + " - " + timeEnd);
         items = addCount(items);
 
-        itemsAdapter = new ArrayAdapter<>(this, R.layout.spinner_layout, items);
+        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(this, R.layout.spinner_layout, items);
         listView.setAdapter(itemsAdapter);
     }
 
@@ -57,6 +50,7 @@ public class ShowTaskActivity extends AppCompatActivity {
             SimpleDateFormat _24HourSDF = new SimpleDateFormat("HH:mm");
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm a");
             Date _24HourDt = _24HourSDF.parse(time);
+            assert _24HourDt != null;
             return simpleDateFormat.format(_24HourDt);
         }
         catch (ParseException exception){

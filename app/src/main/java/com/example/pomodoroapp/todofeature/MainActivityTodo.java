@@ -8,16 +8,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -33,21 +27,18 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 public class MainActivityTodo extends AppCompatActivity {
     private String todoDate;
     private String todoTime;
     private String todoName;
-    private String todoTimeHour;
-    private String todoTimeMinute;
     private String todoPreference;
     private TodoAdapter adapter;
     private ArrayList<TodoModal> todoModalArrayList;
     private RecyclerView todoRV;
     private TextView textView;
-    private int position;
     private String todoRepeatInterval;
-    private boolean todoRepeat;
     private ImageButton buttonSort;
 
     @Override
@@ -55,13 +46,14 @@ public class MainActivityTodo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_todo);
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + "ToDo" + "</font>"));
         Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
         upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         todoRV = findViewById(R.id.idRVTodo);
-        buttonSort = (ImageButton) findViewById(R.id.buttonSort);
+        buttonSort = findViewById(R.id.buttonSort);
         textView = findViewById(R.id.sortView);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
@@ -71,52 +63,47 @@ public class MainActivityTodo extends AppCompatActivity {
 
         buildRecyclerView();
 
-        buttonSort.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopupMenu popup = new PopupMenu(MainActivityTodo.this, buttonSort);
-                //Inflating the Popup using xml file
-                popup.getMenuInflater().inflate(R.menu.sort_menu, popup.getMenu());
+        buttonSort.setOnClickListener(view -> {
+            PopupMenu popup = new PopupMenu(MainActivityTodo.this, buttonSort);
+            //Inflating the Popup using xml file
+            popup.getMenuInflater().inflate(R.menu.sort_menu, popup.getMenu());
 
-                //registering popup with OnMenuItemClickListener
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.menu_a_to_z:
-                                // sort a to z
-                                Collections.sort(todoModalArrayList, TodoModal.TodoAZComparator);
-                                adapter.notifyDataSetChanged();
-                                saveData();
-                                return true;
+            //registering popup with OnMenuItemClickListener
+            popup.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.menu_a_to_z:
+                        // sort a to z
+                        todoModalArrayList.sort(TodoModal.TodoAZComparator);
+                        adapter.notifyDataSetChanged();
+                        saveData();
+                        return true;
 
-                            case R.id.menu_z_to_a:
-                                // sort z to a
-                                Collections.sort(todoModalArrayList, TodoModal.TodoZAComparator);
-                                adapter.notifyDataSetChanged();
-                                saveData();
-                                return true;
+                    case R.id.menu_z_to_a:
+                        // sort z to a
+                        todoModalArrayList.sort(TodoModal.TodoZAComparator);
+                        adapter.notifyDataSetChanged();
+                        saveData();
+                        return true;
 
-                            case R.id.menu_low_to_high:
-                                // sort from low preference to high preference
-                                Collections.sort(todoModalArrayList, TodoModal.TodoLowToHighComparator);
-                                adapter.notifyDataSetChanged();
-                                saveData();
-                                return true;
+                    case R.id.menu_low_to_high:
+                        // sort from low preference to high preference
+                        todoModalArrayList.sort(TodoModal.TodoLowToHighComparator);
+                        adapter.notifyDataSetChanged();
+                        saveData();
+                        return true;
 
-                            case R.id.menu_high_to_low:
-                                // sort from high preference to low preference
-                                Collections.sort(todoModalArrayList, TodoModal.TodoHighToLowComparator);
-                                adapter.notifyDataSetChanged();
-                                saveData();
-                                return true;
+                    case R.id.menu_high_to_low:
+                        // sort from high preference to low preference
+                        todoModalArrayList.sort(TodoModal.TodoHighToLowComparator);
+                        adapter.notifyDataSetChanged();
+                        saveData();
+                        return true;
 
-                            default:
-                                return false;
-                        }
-                    }
-                });
-                popup.show();//showing popup menu
-            }
+                    default:
+                        return false;
+                }
+            });
+            popup.show();//showing popup menu
         });
 
         setVisibility(buttonSort, textView);
@@ -124,8 +111,7 @@ public class MainActivityTodo extends AppCompatActivity {
         try {
             editTask();
         }
-        catch (ArrayIndexOutOfBoundsException exception){
-            ;
+        catch (ArrayIndexOutOfBoundsException ignored){
         }
     }
 
@@ -223,8 +209,8 @@ public class MainActivityTodo extends AppCompatActivity {
                 todoName = data.getStringExtra("todoName");
                 todoDate = data.getStringExtra("todoDate");
                 todoTime = data.getStringExtra("todoTime");
-                todoTimeHour = data.getStringExtra("todoTimeHour");
-                todoTimeMinute = data.getStringExtra("todoTimeMinute");
+//                String todoTimeHour = data.getStringExtra("todoTimeHour");
+//                String todoTimeMinute = data.getStringExtra("todoTimeMinute");
                 todoPreference = "Low";
                 todoRepeatInterval = "Everyday";
                 todoModalArrayList.add(new TodoModal(todoName, todoDate, todoTime, todoRepeatInterval, false, todoPreference, false));
@@ -240,11 +226,11 @@ public class MainActivityTodo extends AppCompatActivity {
 
     public void editTask(){
         Intent data = getIntent();
-        position = data.getIntExtra("taskValueAdapterPositionEdit", -1);
+        int position = data.getIntExtra("taskValueAdapterPositionEdit", -1);
         todoName = data.getStringExtra("todoNameEdit");
         todoDate = data.getStringExtra("todoDateEdit");
         todoTime = data.getStringExtra("todoTimeEdit");
-        todoRepeat = data.getBooleanExtra("todoRepeatEdit", false);
+        boolean todoRepeat = data.getBooleanExtra("todoRepeatEdit", false);
         todoRepeatInterval = data.getStringExtra("todoRepeatIntervalEdit");
         todoPreference = data.getStringExtra("todoPreferenceEdit");
         todoModalArrayList.set(position, new TodoModal(todoName, todoDate, todoTime, todoRepeatInterval, todoRepeat, todoPreference, false));
@@ -261,7 +247,7 @@ public class MainActivityTodo extends AppCompatActivity {
 
             Collections.swap(todoModalArrayList, fromPosition, toPosition);
 
-            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
+            Objects.requireNonNull(recyclerView.getAdapter()).notifyItemMoved(fromPosition, toPosition);
 
             saveData();
 

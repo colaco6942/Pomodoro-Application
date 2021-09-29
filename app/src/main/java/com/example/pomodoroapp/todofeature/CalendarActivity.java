@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.widget.CalendarView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pomodoroapp.R;
@@ -21,22 +20,17 @@ public class CalendarActivity extends AppCompatActivity {
         // Creating intent to send the calendar result to the Main Activity 2
         Intent intent = new Intent(this, TodoMaker.class);
 
-        calendar = (CalendarView)
-                findViewById(R.id.calendar);
-        date_view = (TextView)
-                findViewById(R.id.date_view);
+        calendar = findViewById(R.id.calendar);
+        date_view = findViewById(R.id.date_view);
 
         // Listener to send result back
-        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                String Date = dayOfMonth + "-" + (month + 1)  + "-" + year;
+        calendar.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
+            String Date = dayOfMonth + "-" + (month + 1)  + "-" + year;
 
-                date_view.setText(Date);
-                intent.putExtra("dateValue", Date);
-                setResult(RESULT_OK, intent);
-                finish();
-            }
+            date_view.setText(Date);
+            intent.putExtra("dateValue", Date);
+            setResult(RESULT_OK, intent);
+            finish();
         });
     }
 }

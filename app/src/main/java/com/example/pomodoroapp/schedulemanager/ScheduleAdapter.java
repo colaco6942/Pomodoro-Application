@@ -28,9 +28,9 @@ import static android.content.Context.MODE_PRIVATE;
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHolder> {
 
     // creating a variable for array list and context.
-    private ArrayList<ScheduleModal> scheduleModalArrayList;
-    private Context context;
-    private View viewActivity;
+    private final ArrayList<ScheduleModal> scheduleModalArrayList;
+    private final Context context;
+    private final View viewActivity;
 
     // creating a constructor for our variables.
     public ScheduleAdapter(ArrayList<ScheduleModal> scheduleModalArrayList, Context context, View viewActivity) {
@@ -97,21 +97,21 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         }
     }
 
-    private int getAM_PM(String hourOfDayString){
-        int hourOfDay = Integer.parseInt(hourOfDayString);
-        if(hourOfDay < 12) {
-            return Calendar.AM;
-        } else {
-            return Calendar.PM;
-        }
-    }
+//    private int getAM_PM(String hourOfDayString){
+//        int hourOfDay = Integer.parseInt(hourOfDayString);
+//        if(hourOfDay < 12) {
+//            return Calendar.AM;
+//        } else {
+//            return Calendar.PM;
+//        }
+//    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        // creating variables for our views.
-        private ImageButton deleteButton, editTaskButton, taskButton, buttonSort;
-        private Button startNotificationButton;
-        private TextView scheduleNameTV, scheduleDateTV, sortView;
+        private ImageButton buttonSort;
+        private final TextView scheduleNameTV;
+        private final TextView scheduleDateTV;
+        private TextView sortView;
         private ArrayList<String> scheduleTasks;
 
         public ViewHolder(@NonNull View itemView) {
@@ -120,97 +120,79 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
             // initializing our views with their ids.
             scheduleNameTV = itemView.findViewById(R.id.idScheduleName);
             scheduleDateTV = itemView.findViewById(R.id.idScheduleDate);
-            deleteButton = itemView.findViewById(R.id.idBtnDeleteSchedule);
-            taskButton = itemView.findViewById(R.id.idBtnShowTask);
-            editTaskButton = itemView.findViewById(R.id.idBtnEditSchedule);
-            startNotificationButton = itemView.findViewById(R.id.idBtnStartNotification);
+            // creating variables for our views.
+            ImageButton deleteButton = itemView.findViewById(R.id.idBtnDeleteSchedule);
+            ImageButton taskButton = itemView.findViewById(R.id.idBtnShowTask);
+            ImageButton editTaskButton = itemView.findViewById(R.id.idBtnEditSchedule);
+            Button startNotificationButton = itemView.findViewById(R.id.idBtnStartNotification);
             final PendingIntent[] pendingIntent = new PendingIntent[1];
             AlarmManager alarmManager;
             alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
-            startNotificationButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Snackbar snackbar = Snackbar
-                            .make(view, "       This Schedule will start in given time and date.", Snackbar.LENGTH_SHORT);
-//                    Snackbar snackbar = Snackbar
-//                            .make(view, "Schedule has started", Snackbar.LENGTH_SHORT);
-//                    snackbar.setAction("OK", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            ;
-//                        }
-//                    });
-                    snackbar.show();
-                    ScheduleModal modal = scheduleModalArrayList.get(getAdapterPosition());
-                    String timeText = modal.getScheduleTimeStart();
-                    String[] list = timeText.split(":");
-                    String dateText = modal.getScheduleDateStart();
-                    String[] dateList = dateText.split("-");
-                    Calendar objCalendar = Calendar.getInstance();
-                    objCalendar.set(Calendar.YEAR, Integer.parseInt(dateList[2]));
-                    objCalendar.set(Calendar.MONTH, Integer.parseInt(dateList[1]) - 1);
-                    objCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateList[0]));
-                    objCalendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(list[0]));
-                    objCalendar.set(Calendar.MINUTE, Integer.parseInt(list[1]));
-                    objCalendar.set(Calendar.SECOND, 0);
-                    objCalendar.set(Calendar.MILLISECOND, 0);
+            startNotificationButton.setOnClickListener(view -> {
+                Snackbar snackbar = Snackbar
+                        .make(view, "       This Schedule will start in given time and date.", Snackbar.LENGTH_SHORT);
+
+                snackbar.show();
+                ScheduleModal modal = scheduleModalArrayList.get(getAdapterPosition());
+                String timeText = modal.getScheduleTimeStart();
+                String[] list = timeText.split(":");
+                String dateText = modal.getScheduleDateStart();
+                String[] dateList = dateText.split("-");
+                Calendar objCalendar = Calendar.getInstance();
+                objCalendar.set(Calendar.YEAR, Integer.parseInt(dateList[2]));
+                objCalendar.set(Calendar.MONTH, Integer.parseInt(dateList[1]) - 1);
+                objCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateList[0]));
+                objCalendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(list[0]));
+                objCalendar.set(Calendar.MINUTE, Integer.parseInt(list[1]));
+                objCalendar.set(Calendar.SECOND, 0);
+                objCalendar.set(Calendar.MILLISECOND, 0);
 //                    objCalendar.set(Calendar.AM_PM, getAM_PM(list[0]));
 
-                    Intent intent = new Intent(context, ExampleService.class);
-                    intent.putExtra("scheduleNameNotification", modal.getScheduleName());
-                    intent.putExtra("scheduleTaskNotification", modal.getScheduleTasks());
-                    intent.putExtra("scheduleStartTimeNotification", modal.getScheduleTimeStart());
-                    intent.putExtra("scheduleEndDateNotification", modal.getScheduleDateEnd());
-                    pendingIntent[0] = PendingIntent.getForegroundService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1000 * 5, pendingIntent[0]);
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, objCalendar.getTimeInMillis(), pendingIntent[0]);
-                }
+                Intent intent = new Intent(context, ExampleService.class);
+                intent.putExtra("scheduleNameNotification", modal.getScheduleName());
+                intent.putExtra("scheduleTaskNotification", modal.getScheduleTasks());
+                intent.putExtra("scheduleStartTimeNotification", modal.getScheduleTimeStart());
+                intent.putExtra("scheduleEndDateNotification", modal.getScheduleDateEnd());
+                pendingIntent[0] = PendingIntent.getForegroundService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, objCalendar.getTimeInMillis(), pendingIntent[0]);
             });
 
-            editTaskButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ScheduleModal modal = scheduleModalArrayList.get(getAdapterPosition());
-                    scheduleTasks = modal.getScheduleTasks();
-                    Intent intent = new Intent(view.getContext(), ScheduleMakerEdit.class);
-                    intent.putExtra("adapterPosition", getAdapterPosition());
-                    intent.putExtra("scheduleTaskName", modal.getScheduleName());
-                    intent.putExtra("scheduleTaskDateStart", modal.getScheduleDateStart());
-                    intent.putExtra("scheduleTaskDateEnd", modal.getScheduleDateEnd());
-                    intent.putExtra("scheduleTaskTimeStart", modal.getScheduleTimeStart());
-                    intent.putExtra("scheduleTaskTimeEnd", modal.getScheduleTimeEnd());
-                    intent.putExtra("scheduleTaskList", scheduleTasks);
-                    view.getContext().startActivity(intent);
-                }
+            editTaskButton.setOnClickListener(view -> {
+                ScheduleModal modal = scheduleModalArrayList.get(getAdapterPosition());
+                scheduleTasks = modal.getScheduleTasks();
+                Intent intent = new Intent(view.getContext(), ScheduleMakerEdit.class);
+                intent.putExtra("adapterPosition", getAdapterPosition());
+                intent.putExtra("scheduleTaskName", modal.getScheduleName());
+                intent.putExtra("scheduleTaskDateStart", modal.getScheduleDateStart());
+                intent.putExtra("scheduleTaskDateEnd", modal.getScheduleDateEnd());
+                intent.putExtra("scheduleTaskTimeStart", modal.getScheduleTimeStart());
+                intent.putExtra("scheduleTaskTimeEnd", modal.getScheduleTimeEnd());
+                intent.putExtra("scheduleTaskList", scheduleTasks);
+                view.getContext().startActivity(intent);
             });
 
-            taskButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ScheduleModal modal = scheduleModalArrayList.get(getAdapterPosition());
-                    scheduleTasks = modal.getScheduleTasks();
-                    Intent intent = new Intent(view.getContext(), ShowTaskActivity.class);
-                    intent.putExtra("scheduleTaskTimeStart", modal.getScheduleTimeStart());
-                    intent.putExtra("scheduleTaskTimeEnd", modal.getScheduleTimeEnd());
-                    intent.putExtra("scheduleTaskList", scheduleTasks);
-                    view.getContext().startActivity(intent);
-                }
+            taskButton.setOnClickListener(view -> {
+                ScheduleModal modal = scheduleModalArrayList.get(getAdapterPosition());
+                scheduleTasks = modal.getScheduleTasks();
+                Intent intent = new Intent(view.getContext(), ShowTaskActivity.class);
+                intent.putExtra("scheduleTaskTimeStart", modal.getScheduleTimeStart());
+                intent.putExtra("scheduleTaskTimeEnd", modal.getScheduleTimeEnd());
+                intent.putExtra("scheduleTaskList", scheduleTasks);
+                view.getContext().startActivity(intent);
             });
 
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    sortView = viewActivity.findViewById(R.id.sortView);
-                    buttonSort = viewActivity.findViewById(R.id.buttonSort);
-                    Intent serviceIntent = new Intent(context, ExampleService.class);
-                    context.stopService(serviceIntent);
-                    scheduleModalArrayList.remove(getAdapterPosition());
-                    notifyItemRemoved(getAdapterPosition());
-                    notifyItemRangeChanged(getAdapterPosition(), scheduleModalArrayList.size());
-                    setVisibility(buttonSort, sortView);
-                    saveData();
-                }
+            deleteButton.setOnClickListener(view -> {
+                sortView = viewActivity.findViewById(R.id.sortView);
+                buttonSort = viewActivity.findViewById(R.id.buttonSort);
+                Intent serviceIntent = new Intent(context, ExampleService.class);
+                context.stopService(serviceIntent);
+                scheduleModalArrayList.remove(getAdapterPosition());
+                notifyItemRemoved(getAdapterPosition());
+                notifyItemRangeChanged(getAdapterPosition(), scheduleModalArrayList.size());
+                setVisibility(buttonSort, sortView);
+                saveData();
             });
         }
     }

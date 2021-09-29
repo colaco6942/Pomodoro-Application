@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
@@ -22,14 +21,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pomodoroapp.R;
-import com.example.pomodoroapp.todofeature.MainActivityTodo;
-import com.example.pomodoroapp.todofeature.TodoModal;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 public class MainActivityScheduleManager extends AppCompatActivity {
     private String scheduleStartDate;
@@ -37,13 +35,10 @@ public class MainActivityScheduleManager extends AppCompatActivity {
     private String scheduleStartTime;
     private String scheduleEndTime;
     private String scheduleName;
-    private String scheduleTimeHour;
-    private String scheduleTimeMinute;
     private ArrayList<String> taskList;
     private ScheduleAdapter adapter;
     private ArrayList<ScheduleModal> scheduleModalArrayList;
     private RecyclerView scheduleRV;
-    private int position;
     private ImageButton buttonSort;
     private TextView textView;
 
@@ -52,13 +47,14 @@ public class MainActivityScheduleManager extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_schedule);
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + "Schedule Manager" + "</font>"));
         Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
         upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         scheduleRV = findViewById(R.id.idRVSchedules);
-        buttonSort = (ImageButton) findViewById(R.id.buttonSort);
+        buttonSort = findViewById(R.id.buttonSort);
         textView = findViewById(R.id.sortView);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
@@ -68,38 +64,33 @@ public class MainActivityScheduleManager extends AppCompatActivity {
 
         buildRecyclerView();
 
-        buttonSort.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopupMenu popup = new PopupMenu(MainActivityScheduleManager.this, buttonSort);
-                //Inflating the Popup using xml file
-                popup.getMenuInflater().inflate(R.menu.sort_menu_two, popup.getMenu());
+        buttonSort.setOnClickListener(view -> {
+            PopupMenu popup = new PopupMenu(MainActivityScheduleManager.this, buttonSort);
+            //Inflating the Popup using xml file
+            popup.getMenuInflater().inflate(R.menu.sort_menu_two, popup.getMenu());
 
-                //registering popup with OnMenuItemClickListener
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.menu_a_to_z:
-                                // sort a to z
-                                Collections.sort(scheduleModalArrayList, ScheduleModal.ScheduleAZComparator);
-                                adapter.notifyDataSetChanged();
-                                saveData();
-                                return true;
+            //registering popup with OnMenuItemClickListener
+            popup.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.menu_a_to_z:
+                        // sort a to z
+                        scheduleModalArrayList.sort(ScheduleModal.ScheduleAZComparator);
+                        adapter.notifyDataSetChanged();
+                        saveData();
+                        return true;
 
-                            case R.id.menu_z_to_a:
-                                // sort z to a
-                                Collections.sort(scheduleModalArrayList, ScheduleModal.ScheduleZAComparator);
-                                adapter.notifyDataSetChanged();
-                                saveData();
-                                return true;
+                    case R.id.menu_z_to_a:
+                        // sort z to a
+                        scheduleModalArrayList.sort(ScheduleModal.ScheduleZAComparator);
+                        adapter.notifyDataSetChanged();
+                        saveData();
+                        return true;
 
-                            default:
-                                return false;
-                        }
-                    }
-                });
-                popup.show();//showing popup menu
-            }
+                    default:
+                        return false;
+                }
+            });
+            popup.show();//showing popup menu
         });
 
         setVisibility(buttonSort, textView);
@@ -107,8 +98,7 @@ public class MainActivityScheduleManager extends AppCompatActivity {
         try {
             editTask();
         }
-        catch (ArrayIndexOutOfBoundsException exception){
-            ;
+        catch (ArrayIndexOutOfBoundsException ignored){
         }
     }
 
@@ -208,8 +198,8 @@ public class MainActivityScheduleManager extends AppCompatActivity {
                 scheduleEndDate = data.getStringExtra("scheduleEndDate");
                 scheduleStartTime = data.getStringExtra("scheduleStartTime");
                 scheduleEndTime = data.getStringExtra("scheduleEndTime");
-                scheduleTimeHour = data.getStringExtra("scheduleTimeHour");
-                scheduleTimeMinute = data.getStringExtra("scheduleTimeMinute");
+                String scheduleTimeHour = data.getStringExtra("scheduleTimeHour");
+                String scheduleTimeMinute = data.getStringExtra("scheduleTimeMinute");
                 taskList = data.getStringArrayListExtra("scheduleTaskLists");
                 scheduleModalArrayList.add(new ScheduleModal(scheduleName, scheduleStartDate, scheduleEndDate, scheduleStartTime, scheduleEndTime, taskList));
                 // set visibility of sort view
@@ -224,7 +214,7 @@ public class MainActivityScheduleManager extends AppCompatActivity {
 
     public void editTask(){
         Intent data = getIntent();
-        position = data.getIntExtra("taskValueAdapterPositionEdit", -1);
+        int position = data.getIntExtra("taskValueAdapterPositionEdit", -1);
         scheduleName = data.getStringExtra("scheduleNameEdit");
         scheduleStartDate = data.getStringExtra("scheduleStartDateEdit");
         scheduleEndDate = data.getStringExtra("scheduleEndDateEdit");
@@ -245,7 +235,7 @@ public class MainActivityScheduleManager extends AppCompatActivity {
 
             Collections.swap(scheduleModalArrayList, fromPosition, toPosition);
 
-            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
+            Objects.requireNonNull(recyclerView.getAdapter()).notifyItemMoved(fromPosition, toPosition);
 
             saveData();
 

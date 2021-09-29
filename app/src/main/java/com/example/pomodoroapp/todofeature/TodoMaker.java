@@ -19,10 +19,7 @@ import com.google.android.material.snackbar.Snackbar;
 public class TodoMaker extends AppCompatActivity {
 
     private EditText todoNameET;
-    private String todoName = "";
-    private EditText DateView;
     private String dateText = "";
-    private EditText TimeView;
     private String TimeTextMinute;
     private String TimeTextHour;
     private String TimeText = "";
@@ -32,13 +29,14 @@ public class TodoMaker extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_maker);
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + "Create Your Todo" + "</font>"));
         Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
         upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
-        todoNameET = (EditText) findViewById(R.id.todoName);
+        todoNameET = findViewById(R.id.todoName);
     }
 
     public void openCalenderActivity(View view)
@@ -60,8 +58,8 @@ public class TodoMaker extends AppCompatActivity {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 dateText = data.getStringExtra("dateValue");
-                DateView = findViewById(R.id.dateText);
-                DateView.setText(dateText);
+                EditText dateView = findViewById(R.id.dateText);
+                dateView.setText(dateText);
             }
         }
         else if (requestCode == 2){
@@ -69,21 +67,17 @@ public class TodoMaker extends AppCompatActivity {
                 TimeTextHour = data.getStringExtra("timeValueHour");
                 TimeTextMinute = data.getStringExtra("timeValueMinute");
                 TimeText = TimeTextHour + ":" + TimeTextMinute;
-                TimeView = findViewById(R.id.timeText);
-                TimeView.setText(TimeText);
+                EditText timeView = findViewById(R.id.timeText);
+                timeView.setText(TimeText);
             }
         }
     }
 
     public void confirmTodo(View view){
-        todoName = todoNameET.getText().toString();
+        String todoName = todoNameET.getText().toString();
         if (todoName.equals("") || dateText.equals("") || TimeText.equals("")){
             Snackbar snackbar = Snackbar.make(view, "Please fill in all the details", Snackbar.LENGTH_SHORT);
-            snackbar.setAction("OK", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ;
-                }
+            snackbar.setAction("OK", view1 -> {
             });
             snackbar.show();
         }

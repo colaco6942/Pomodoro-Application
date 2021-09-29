@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.transition.Explode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -136,6 +137,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             editTaskButton = itemView.findViewById(R.id.idBtnEditTask);
 
             cardView = itemView.findViewById(R.id.card_view);
+
+//            taskNameTV.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    TaskModal modal = taskModalArrayList.get(getAdapterPosition());
+//                    Intent intent = new Intent(view.getContext(), TaskNameEdit.class);
+//                    intent.putExtra("taskName", modal.getTaskName());
+//                    intent.putExtra("taskPosition", getAdapterPosition());
+//                    view.getContext().startActivity(intent);
+//                }
+//            });
 
             editTaskButton.setOnClickListener(new View.OnClickListener() {
                 @Override

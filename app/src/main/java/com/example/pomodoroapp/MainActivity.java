@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + "Pomodoro App" + "</font>"));
     }
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 NotificationChannel serviceChannel = new NotificationChannel(
                         CHANNEL_ID,
                         "Notification Service Channel",
-                        NotificationManager.IMPORTANCE_DEFAULT
+                        NotificationManager.IMPORTANCE_HIGH
                 );
 
                 NotificationManager manager = getSystemService(NotificationManager.class);
