@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import java.util.Calendar;
 
@@ -19,7 +20,7 @@ public class StopNotification extends BroadcastReceiver {
         AlarmManager alarmManager;
         alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         String todoStartTime = intent.getStringExtra("todoStartTimeNotification");
-        String todoName = intent.getStringExtra("scheduleNameNotification");
+        String todoName = intent.getStringExtra("todoNameNotification");
         boolean repeatEnable = intent.getBooleanExtra("todoRepeatEnableNotification", false);
         String repeatInterval = intent.getStringExtra("todoRepeatIntervalNotification");
 

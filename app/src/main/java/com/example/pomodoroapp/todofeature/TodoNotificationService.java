@@ -32,6 +32,7 @@ public class TodoNotificationService extends Service {
 
         Intent stopNotificationIntent = new Intent(this, StopNotification.class);
         stopNotificationIntent.putExtra("todoRepeatEnableNotification" , repeatEnable);
+        stopNotificationIntent.putExtra("todoNameNotification" , todoName);
         stopNotificationIntent.putExtra("todoRepeatIntervalNotification", repeatInterval);
         stopNotificationIntent.putExtra("todoStartTimeNotification", todoStartTime);
         PendingIntent stopPendingIntent = PendingIntent.getBroadcast(this, 0, stopNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);

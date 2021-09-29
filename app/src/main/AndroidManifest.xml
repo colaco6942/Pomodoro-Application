@@ -82,8 +82,6 @@
             android:parentActivityName=".upcomingtasks.CreatePomodoro"
             android:screenOrientation="portrait"
             android:theme="@style/DialogTheme" />
-        <activity android:name=".upcomingtasks.TaskNameEdit"
-            android:theme="@style/DialogTheme" />
         <activity
             android:name=".upcomingtasks.CreatePomodoro"
             android:configChanges="orientation"

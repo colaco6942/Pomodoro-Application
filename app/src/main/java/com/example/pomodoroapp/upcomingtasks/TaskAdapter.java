@@ -138,16 +138,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
             cardView = itemView.findViewById(R.id.card_view);
 
-//            taskNameTV.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    TaskModal modal = taskModalArrayList.get(getAdapterPosition());
-//                    Intent intent = new Intent(view.getContext(), TaskNameEdit.class);
-//                    intent.putExtra("taskName", modal.getTaskName());
-//                    intent.putExtra("taskPosition", getAdapterPosition());
-//                    view.getContext().startActivity(intent);
-//                }
-//            });
 
             editTaskButton.setOnClickListener(new View.OnClickListener() {
                 @Override
