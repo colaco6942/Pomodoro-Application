@@ -1,64 +1,54 @@
 package com.example.pomodoroapp.todofeature;
 
-import android.app.Notification;
 import android.app.PendingIntent;
-import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
-import android.os.IBinder;
+import android.util.Log;
 
-import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
-
+import androidx.core.app.NotificationManagerCompat;
 import com.example.pomodoroapp.R;
+import java.util.concurrent.ThreadLocalRandom;
+import static com.example.pomodoroapp.MainActivity.CHANNEL_ID;
+import static com.example.pomodoroapp.todofeature.MainActivityTodo.TODO_NAME;
+import static com.example.pomodoroapp.todofeature.MainActivityTodo.TODO_NOTIFICATION_ID;
+import static com.example.pomodoroapp.todofeature.MainActivityTodo.TODO_REPEAT_ENABLE;
+import static com.example.pomodoroapp.todofeature.MainActivityTodo.TODO_REPEAT_INTERVAL;
+import static com.example.pomodoroapp.todofeature.MainActivityTodo.TODO_START_TIME;
 
-import static com.example.pomodoroapp.MainActivity.App.CHANNEL_ID;
-
-public class TodoNotificationService extends Service {
+public class TodoNotificationService extends BroadcastReceiver {
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        String todoName = intent.getStringExtra("todoNameNotification");
-        String todoStartTime = intent.getStringExtra("todoStartTimeNotification");
-        boolean repeatEnable = intent.getBooleanExtra("todoRepeatEnableNotification", false);
-        String repeatInterval = intent.getStringExtra("todoRepeatIntervalNotification");
-        Intent notificationIntent = new Intent(this, MainActivityTodo.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+    public void onReceive(Context context, Intent intent) {
+        String todoName = intent.getStringExtra(TODO_NAME);
+        String todoStartTime = intent.getStringExtra(TODO_START_TIME);
+        boolean repeatEnable = intent.getBooleanExtra(TODO_REPEAT_ENABLE, false);
+        String repeatInterval = intent.getStringExtra(TODO_REPEAT_INTERVAL);
+        int notificationId = intent.getIntExtra(TODO_NOTIFICATION_ID, 0);
+        Intent notificationIntent = new Intent(context, MainActivityTodo.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context,
                 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Intent stopNotificationIntent = new Intent(this, StopNotification.class);
-        stopNotificationIntent.putExtra("todoRepeatEnableNotification" , repeatEnable);
-        stopNotificationIntent.putExtra("todoNameNotification" , todoName);
-        stopNotificationIntent.putExtra("todoRepeatIntervalNotification", repeatInterval);
-        stopNotificationIntent.putExtra("todoStartTimeNotification", todoStartTime);
-        PendingIntent stopPendingIntent = PendingIntent.getBroadcast(this, 0, stopNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent stopNotificationIntent = new Intent(context, StopNotification.class);
+        stopNotificationIntent.putExtra(TODO_NAME, todoName);
+        stopNotificationIntent.putExtra(TODO_START_TIME, todoStartTime);
+        stopNotificationIntent.putExtra(TODO_REPEAT_ENABLE, repeatEnable);
+        stopNotificationIntent.putExtra(TODO_REPEAT_INTERVAL, repeatInterval);
+        stopNotificationIntent.putExtra(TODO_NOTIFICATION_ID, notificationId);
+        PendingIntent stopPendingIntent = PendingIntent.getBroadcast(context, 0, stopNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle(todoName)
-                .setContentText("It is time for your task")
                 .setSmallIcon(R.drawable.ic_baseline_notifications_active_24)
+                .setContentText("Time for your task")
                 .setContentIntent(pendingIntent)
-                .addAction(R.drawable.ic_baseline_delete_24, "Done Task", stopPendingIntent)
-                .build();
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .addAction(R.drawable.ic_baseline_notifications_active_24, "Done Task", stopPendingIntent)
+                .setOngoing(true);
 
-        startForeground(1, notification);
-
-        return START_NOT_STICKY;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
+        notificationManagerCompat.notify(notificationId, builder.build());
     }
 }
 

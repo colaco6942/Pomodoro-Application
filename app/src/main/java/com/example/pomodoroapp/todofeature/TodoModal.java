@@ -11,8 +11,9 @@ public class TodoModal {
     private final String todoRepeatInterval;
     private final boolean todoRepeat;
     private final boolean notificationState;
+    private final int notificationId;
 
-    public TodoModal(String todoName, String todoDateStart, String todoTimeStart, String todoRepeatInterval, boolean todoRepeat, String todoPreference, boolean notificationState){
+    public TodoModal(String todoName, String todoDateStart, String todoTimeStart, String todoRepeatInterval, boolean todoRepeat, String todoPreference, boolean notificationState, int notificationId){
         this.todoName = todoName;
         this.todoDateStart = todoDateStart;
         this.todoTimeStart = todoTimeStart;
@@ -20,6 +21,7 @@ public class TodoModal {
         this.todoRepeat = todoRepeat;
         this.todoPreference = todoPreference;
         this.notificationState = notificationState;
+        this.notificationId = notificationId;
     }
 
     public static Comparator<TodoModal> TodoAZComparator = (modal1, modal2) -> modal1.getTodoName().compareTo(modal2.getTodoName());
@@ -45,6 +47,8 @@ public class TodoModal {
     public boolean getTodoRepeat(){return todoRepeat;}
 
     public boolean isNotificationState(){return notificationState;}
+
+    public int getNotificationId(){return notificationId;}
 
     private static long getTimeInMilli(TodoModal modal){
         String timeText = modal.getTodoTimeStart();

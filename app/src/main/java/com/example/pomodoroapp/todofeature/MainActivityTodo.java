@@ -32,6 +32,13 @@ import java.util.Comparator;
 import java.util.Objects;
 
 public class MainActivityTodo extends AppCompatActivity {
+    public static final String TODO_NAME = "todoNameNotification";
+    public static final String TODO_START_TIME = "todoStartTimeNotification";
+    public static final String TODO_DATE_START = "todoStartDateNotification";
+    public static final String TODO_REPEAT_ENABLE = "todoRepeatEnableNotification";
+    public static final String TODO_REPEAT_INTERVAL = "todoRepeatIntervalNotification";
+    public static final String TODO_NOTIFICATION_ID = "todoRepeatNotificationId";
+
     private String todoDate;
     private String todoTime;
     private String todoName;
@@ -222,7 +229,7 @@ public class MainActivityTodo extends AppCompatActivity {
 //                String todoTimeMinute = data.getStringExtra("todoTimeMinute");
                 todoPreference = "Low";
                 todoRepeatInterval = "Everyday";
-                todoModalArrayList.add(new TodoModal(todoName, todoDate, todoTime, todoRepeatInterval, false, todoPreference, false));
+                todoModalArrayList.add(new TodoModal(todoName, todoDate, todoTime, todoRepeatInterval, false, todoPreference, false, 0));
                 // notifying adapter when new data added.
                 adapter.notifyItemInserted(todoModalArrayList.size());
                 // set visibility of sort view
@@ -242,7 +249,7 @@ public class MainActivityTodo extends AppCompatActivity {
         boolean todoRepeat = data.getBooleanExtra("todoRepeatEdit", false);
         todoRepeatInterval = data.getStringExtra("todoRepeatIntervalEdit");
         todoPreference = data.getStringExtra("todoPreferenceEdit");
-        todoModalArrayList.set(position, new TodoModal(todoName, todoDate, todoTime, todoRepeatInterval, todoRepeat, todoPreference, false));
+        todoModalArrayList.set(position, new TodoModal(todoName, todoDate, todoTime, todoRepeatInterval, todoRepeat, todoPreference, false, 0));
         adapter.notifyDataSetChanged();
         saveData();
     }

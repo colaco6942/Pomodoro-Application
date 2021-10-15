@@ -19,11 +19,13 @@ import com.example.pomodoroapp.todofeature.MainActivityTodo;
 import com.example.pomodoroapp.upcomingtasks.MainActivityUpcomingPomodoros;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String CHANNEL_ID = "pomodoroChannel";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        notificationChannel();
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
@@ -45,27 +47,16 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public static class App extends Application {
-        public static final String CHANNEL_ID = "NotificationServiceChannel";
+    private void notificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel serviceChannel = new NotificationChannel(
+                    CHANNEL_ID,
+                    "Reminder",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
 
-        @Override
-        public void onCreate() {
-            super.onCreate();
-
-            createNotificationChannel();
-        }
-
-        private void createNotificationChannel() {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                NotificationChannel serviceChannel = new NotificationChannel(
-                        CHANNEL_ID,
-                        "Notification Service Channel",
-                        NotificationManager.IMPORTANCE_HIGH
-                );
-
-                NotificationManager manager = getSystemService(NotificationManager.class);
-                manager.createNotificationChannel(serviceChannel);
-            }
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(serviceChannel);
         }
     }
 }

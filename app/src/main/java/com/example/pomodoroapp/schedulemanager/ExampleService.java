@@ -13,7 +13,7 @@ import com.example.pomodoroapp.R;
 
 import java.util.ArrayList;
 
-import static com.example.pomodoroapp.MainActivity.App.CHANNEL_ID;
+import static com.example.pomodoroapp.MainActivity.CHANNEL_ID;
 
 
 public class ExampleService extends Service {

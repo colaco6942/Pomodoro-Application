@@ -1,33 +1,45 @@
 package com.example.pomodoroapp.todofeature;
 
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import androidx.core.app.NotificationManagerCompat;
+
 import java.util.Calendar;
 
 import static android.content.Context.ALARM_SERVICE;
+import static com.example.pomodoroapp.todofeature.MainActivityTodo.TODO_NAME;
+import static com.example.pomodoroapp.todofeature.MainActivityTodo.TODO_NOTIFICATION_ID;
+import static com.example.pomodoroapp.todofeature.MainActivityTodo.TODO_REPEAT_ENABLE;
+import static com.example.pomodoroapp.todofeature.MainActivityTodo.TODO_REPEAT_INTERVAL;
+import static com.example.pomodoroapp.todofeature.MainActivityTodo.TODO_START_TIME;
 
 public class StopNotification extends BroadcastReceiver {
+    public String TAG = "colaco";
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent serviceIntent = new Intent(context, TodoNotificationService.class);
-        context.stopService(serviceIntent);
-        final PendingIntent[] pendingIntent = new PendingIntent[1];
-        AlarmManager alarmManager;
-        alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        String todoStartTime = intent.getStringExtra("todoStartTimeNotification");
-        String todoName = intent.getStringExtra("todoNameNotification");
-        boolean repeatEnable = intent.getBooleanExtra("todoRepeatEnableNotification", false);
-        String repeatInterval = intent.getStringExtra("todoRepeatIntervalNotification");
+        String todoStartTime = intent.getStringExtra(TODO_START_TIME);
+        String todoName = intent.getStringExtra(TODO_NAME);
+        boolean repeatEnable = intent.getBooleanExtra(TODO_REPEAT_ENABLE, false);
+        String repeatInterval = intent.getStringExtra(TODO_REPEAT_INTERVAL);
+        int notificationId = intent.getIntExtra(TODO_NOTIFICATION_ID, 0);
 
-        if (!repeatEnable){
-            context.stopService(serviceIntent);
-        }
-        else {
+//        Log.i(TAG, String.valueOf(notificationId));
+//        Log.i(TAG, String.valueOf(repeatEnable));
+//        Log.i(TAG, repeatInterval);
+
+        String notificationService = Context.NOTIFICATION_SERVICE;
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(notificationService);
+        notificationManager.cancel(notificationId);
+
+        if (repeatEnable) {
+
             Calendar objCalendar = Calendar.getInstance();
 
             objCalendar.set(Calendar.YEAR, objCalendar.get(Calendar.YEAR));
@@ -39,13 +51,15 @@ public class StopNotification extends BroadcastReceiver {
             objCalendar.set(Calendar.MILLISECOND, 0);
 
             intent = new Intent(context, TodoNotificationService.class);
-            intent.putExtra("todoNameNotification", todoName);
-            intent.putExtra("todoStartTimeNotification", todoStartTime);
-            intent.putExtra("todoRepeatEnableNotification" , true);
-            intent.putExtra("todoRepeatIntervalNotification", repeatInterval);
-            pendingIntent[0] = PendingIntent.getForegroundService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            intent.putExtra(TODO_NAME, todoName);
+            intent.putExtra(TODO_START_TIME, todoStartTime);
+            intent.putExtra(TODO_REPEAT_ENABLE, true);
+            intent.putExtra(TODO_REPEAT_INTERVAL, repeatInterval);
+            intent.putExtra(TODO_NOTIFICATION_ID, notificationId);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, objCalendar.getTimeInMillis() + getRepeatInterval(repeatInterval), pendingIntent[0]);
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, objCalendar.getTimeInMillis() + getRepeatInterval(repeatInterval), pendingIntent);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.pomodoroapp.todofeature;
 
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -21,9 +22,16 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static android.content.Context.ALARM_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
+import static com.example.pomodoroapp.todofeature.MainActivityTodo.TODO_DATE_START;
+import static com.example.pomodoroapp.todofeature.MainActivityTodo.TODO_NAME;
+import static com.example.pomodoroapp.todofeature.MainActivityTodo.TODO_NOTIFICATION_ID;
+import static com.example.pomodoroapp.todofeature.MainActivityTodo.TODO_REPEAT_ENABLE;
+import static com.example.pomodoroapp.todofeature.MainActivityTodo.TODO_REPEAT_INTERVAL;
+import static com.example.pomodoroapp.todofeature.MainActivityTodo.TODO_START_TIME;
 
 public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
 
@@ -104,26 +112,16 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         }
     }
 
-    private void stopNotification(){
+    private void stopNotification(TodoModal modal){
+        String notificationService = Context.NOTIFICATION_SERVICE;
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(notificationService);
+        notificationManager.cancel(modal.getNotificationId());
+
         Intent intent = new Intent(context, TodoNotificationService.class);
-        final PendingIntent[] pendingIntent = new PendingIntent[1];
-        pendingIntent[0] = PendingIntent.getForegroundService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager alarmManager;
-        alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        alarmManager.cancel(pendingIntent[0]);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, modal.getNotificationId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
 
-    }
-
-    private boolean notificationOnIterator(){
-        TodoModal[] modal = new TodoModal[getItemCount()];
-        boolean isOn = false;
-        for(int i = 0; i < getItemCount(); i++){
-            modal[i] = TodoModalArrayList.get(i);
-            if (modal[i].isNotificationState()){
-                isOn = true;
-            }
-        }
-        return isOn;
     }
 
     private boolean isNotificationOn(ImageButton startNotificationButton){
@@ -131,7 +129,6 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
         private final ImageButton startNotificationButton;
         private ImageButton buttonSort;
         private final TextView todoNameTV;
@@ -152,14 +149,10 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
             ImageButton editTaskButton = itemView.findViewById(R.id.idBtnEditTodo);
             startNotificationButton = itemView.findViewById(R.id.idBtnStartNotification);
 
-            final PendingIntent[] pendingIntent = new PendingIntent[1];
-            AlarmManager alarmManager;
-            alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-
             startNotificationButton.setOnClickListener(view -> {
                 TodoModal modal = TodoModalArrayList.get(getAdapterPosition());
 
-                if(!notificationOnIterator()){
+                if(!isNotificationOn(startNotificationButton)){
                     Snackbar snackbar = Snackbar
                             .make(view, "       This Task will start in given time and date.", Snackbar.LENGTH_SHORT);
                     snackbar.show();
@@ -172,10 +165,9 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
                         startNotificationButton.setImageTintList(context.getResources().getColorStateList(R.color.red));
                         isOn = true;
                     }
-
                     TodoModalArrayList.set(getAdapterPosition(), new TodoModal
                             (modal.getTodoName(), modal.getTodoDateStart(), modal.getTodoTimeStart(), modal.getTodoRepeatInterval(), modal.getTodoRepeat(),
-                                    modal.getTodoPreference(), isOn));
+                                    modal.getTodoPreference(), isOn, modal.getTodoName().hashCode()));
                     notifyDataSetChanged();
                     saveData();
 
@@ -194,30 +186,27 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
 //                    objCalendar.set(Calendar.AM_PM, getAM_PM(list[0]));
 
                     Intent intent = new Intent(context, TodoNotificationService.class);
-                    intent.putExtra("todoNameNotification", modal.getTodoName());
-                    intent.putExtra("todoStartTimeNotification", modal.getTodoTimeStart());
-                    intent.putExtra("todoDateNotification", modal.getTodoDateStart());
-                    intent.putExtra("todoRepeatEnableNotification", modal.getTodoRepeat());
-                    intent.putExtra("todoRepeatIntervalNotification", modal.getTodoRepeatInterval());
-                    pendingIntent[0] = PendingIntent.getForegroundService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1000 * 5, pendingIntent[0]);
-                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, objCalendar.getTimeInMillis(), pendingIntent[0]);
+                    intent.putExtra(TODO_NAME, modal.getTodoName());
+                    intent.putExtra(TODO_START_TIME, modal.getTodoTimeStart());
+                    intent.putExtra(TODO_DATE_START, modal.getTodoDateStart());
+                    intent.putExtra(TODO_REPEAT_ENABLE, modal.getTodoRepeat());
+                    intent.putExtra(TODO_REPEAT_INTERVAL, modal.getTodoRepeatInterval());
+                    intent.putExtra(TODO_NOTIFICATION_ID, modal.getTodoName().hashCode());
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, modal.getTodoName().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+//                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1000 * 5, pendingIntent);
+                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, objCalendar.getTimeInMillis(), pendingIntent);
                 }
 
-                else if(isNotificationOn(startNotificationButton)){
-                    stopNotification();
+                else {
+                    stopNotification(modal);
                     startNotificationButton.setImageTintList(context.getResources().getColorStateList(R.color.black));
                     isOn = false;
                     TodoModalArrayList.set(getAdapterPosition(), new TodoModal
                             (modal.getTodoName(), modal.getTodoDateStart(), modal.getTodoTimeStart(), modal.getTodoRepeatInterval(), modal.getTodoRepeat(),
-                                    modal.getTodoPreference(), isOn));
+                                    modal.getTodoPreference(), isOn, modal.getNotificationId()));
                     notifyDataSetChanged();
                     saveData();
-                }
-                else{
-                    Snackbar snackbar = Snackbar
-                            .make(view, "       You can choose one notification at time", Snackbar.LENGTH_SHORT);
-                    snackbar.show();
                 }
             });
 
@@ -235,7 +224,8 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
             });
 
             deleteButton.setOnClickListener(view -> {
-                stopNotification();
+                TodoModal modal = TodoModalArrayList.get(getAdapterPosition());
+                stopNotification(modal);
                 textView = viewActivity.findViewById(R.id.sortView);
                 buttonSort = viewActivity.findViewById(R.id.buttonSort);
                 TodoModalArrayList.remove(getAdapterPosition());
