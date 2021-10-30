@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:backgroundTint="#E1DFDF"
+    android:backgroundTint="@color/textBackgroundColor"
     >
 
     <RelativeLayout
@@ -50,7 +50,7 @@
             android:layout_width="39dp"
             android:layout_height="37dp"
             android:layout_alignRight="@id/idTodoName"
-            android:backgroundTint="#E1DFDF"
+            android:backgroundTint="@color/textBackgroundColor"
             android:src="@drawable/ic_baseline_delete_24"
             app:tint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +61,7 @@
             android:layout_width="39dp"
             android:layout_height="37dp"
             android:layout_marginLeft="320dp"
-            android:backgroundTint="#E1DFDF"
+            android:backgroundTint="@color/textBackgroundColor"
             android:src="@drawable/ic_baseline_edit_24"
             app:tint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +72,7 @@
             android:layout_width="39dp"
             android:layout_height="37dp"
             android:layout_marginLeft="280dp"
-            android:backgroundTint="#E1DFDF"
+            android:backgroundTint="@color/textBackgroundColor"
             android:src="@drawable/ic_baseline_notifications_active_24"
             app:tint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"

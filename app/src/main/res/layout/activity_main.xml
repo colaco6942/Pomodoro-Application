@@ -16,7 +16,7 @@
         android:onClick="todoActivity"
         android:text="Task"
         android:textColor="@color/textColor"
-        android:backgroundTint="#F4F2F2"
+        android:backgroundTint="@color/textBackgroundColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,7 +29,7 @@
         android:onClick="scheduleActivity"
         android:text="Schedule"
         android:textColor="@color/textColor"
-        android:backgroundTint="#F4F2F2"
+        android:backgroundTint="@color/textBackgroundColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,7 +42,7 @@
         android:onClick="upcomingPomodoroActivity"
         android:text="Upcoming pomodoro"
         android:textColor="@color/textColor"
-        android:backgroundTint="#F4F2F2"
+        android:backgroundTint="@color/textBackgroundColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
