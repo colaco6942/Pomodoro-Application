@@ -231,6 +231,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
                 intent.putExtra("scheduleTaskTimeEnd", modal.getScheduleTimeEnd());
                 intent.putExtra("scheduleTaskList", scheduleTasks);
                 view.getContext().startActivity(intent);
+                ((MainActivityScheduleManager)context).finish();
             });
 
             taskButton.setOnClickListener(view -> {

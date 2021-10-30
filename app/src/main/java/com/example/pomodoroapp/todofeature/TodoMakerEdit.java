@@ -167,6 +167,7 @@ public class TodoMakerEdit extends AppCompatActivity {
             intentTask.putExtra("todoRepeatEdit", repeatEnabled);
             intentTask.putExtra("todoPreferenceEdit", todoPreference);
             startActivity(intentTask);
+            finish();
         }
     }
 }

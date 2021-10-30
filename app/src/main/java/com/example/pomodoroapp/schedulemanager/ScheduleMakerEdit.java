@@ -177,6 +177,7 @@ public class ScheduleMakerEdit extends AppCompatActivity {
         intentTask.putExtra("scheduleStartTimeEdit", startTimeText);
         intentTask.putExtra("scheduleEndTimeEdit", endTimeText);
         startActivity(intentTask);
+        finish();
     }
 
 }

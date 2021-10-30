@@ -221,6 +221,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
                 intent.putExtra("todoTaskRepeatInterval", modal.getTodoRepeatInterval());
                 intent.putExtra("todoTaskPreference", modal.getTodoPreference());
                 view.getContext().startActivity(intent);
+                ((MainActivityTodo)context).finish();
             });
 
             deleteButton.setOnClickListener(view -> {
