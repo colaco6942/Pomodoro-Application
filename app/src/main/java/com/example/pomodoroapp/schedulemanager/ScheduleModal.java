@@ -10,14 +10,18 @@ public class ScheduleModal {
     private final String scheduleTimeStart;
     private final String scheduleTimeEnd;
     private final ArrayList<String> scheduleTasks;
+    private final boolean scheduleNotificationState;
+    private final int scheduleNotificationId;
 
-    public ScheduleModal(String scheduleName, String scheduleDateStart, String scheduleDateEnd, String scheduleTimeStart, String scheduleTimeEnd, ArrayList<String> scheduleTasks){
+    public ScheduleModal(String scheduleName, String scheduleDateStart, String scheduleDateEnd, String scheduleTimeStart, String scheduleTimeEnd, ArrayList<String> scheduleTasks, boolean scheduleNotificationState, int scheduleNotificationId){
         this.scheduleName = scheduleName;
         this.scheduleDateStart = scheduleDateStart;
         this.scheduleDateEnd = scheduleDateEnd;
         this.scheduleTimeStart = scheduleTimeStart;
         this.scheduleTimeEnd = scheduleTimeEnd;
         this.scheduleTasks = scheduleTasks;
+        this.scheduleNotificationState = scheduleNotificationState;
+        this.scheduleNotificationId = scheduleNotificationId;
     }
 
     public static Comparator<ScheduleModal> ScheduleAZComparator = (modal1, modal2) -> modal1.getScheduleName().compareTo(modal2.getScheduleName());
@@ -35,4 +39,8 @@ public class ScheduleModal {
     public String getScheduleTimeEnd(){return scheduleTimeEnd;}
 
     public ArrayList<String> getScheduleTasks(){return scheduleTasks;}
+
+    public boolean isScheduleNotificationState(){return scheduleNotificationState;}
+
+    public int getScheduleNotificationId(){return scheduleNotificationId;}
 }

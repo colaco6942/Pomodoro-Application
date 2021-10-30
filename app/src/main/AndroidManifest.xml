@@ -105,7 +105,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".schedulemanager.ExampleService" />
+        <receiver android:name=".schedulemanager.ScheduleNotificationService" />
         <receiver android:name=".schedulemanager.StopNotification" />
         <receiver android:name=".schedulemanager.CancelNotification" />
 

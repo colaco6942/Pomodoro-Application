@@ -28,7 +28,7 @@ public class TodoNotificationService extends BroadcastReceiver {
         int notificationId = intent.getIntExtra(TODO_NOTIFICATION_ID, 0);
         Intent notificationIntent = new Intent(context, MainActivityTodo.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,
-                0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                notificationId, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent stopNotificationIntent = new Intent(context, StopNotification.class);
         stopNotificationIntent.putExtra(TODO_NAME, todoName);
@@ -36,7 +36,7 @@ public class TodoNotificationService extends BroadcastReceiver {
         stopNotificationIntent.putExtra(TODO_REPEAT_ENABLE, repeatEnable);
         stopNotificationIntent.putExtra(TODO_REPEAT_INTERVAL, repeatInterval);
         stopNotificationIntent.putExtra(TODO_NOTIFICATION_ID, notificationId);
-        PendingIntent stopPendingIntent = PendingIntent.getBroadcast(context, 0, stopNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent stopPendingIntent = PendingIntent.getBroadcast(context, notificationId, stopNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle(todoName)

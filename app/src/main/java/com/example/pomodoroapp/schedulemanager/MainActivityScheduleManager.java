@@ -30,6 +30,14 @@ import java.util.Collections;
 import java.util.Objects;
 
 public class MainActivityScheduleManager extends AppCompatActivity {
+    public static final String SCHEDULE_NAME = "scheduleNameNotification";
+    public static final String SCHEDULE_START_TIME = "scheduleStartTimeNotification";
+    public static final String SCHEDULE_END_TIME = "scheduleEndTimeNotification";
+    public static final String SCHEDULE_DATE_START = "scheduleStartDateNotification";
+    public static final String SCHEDULE_DATE_END = "scheduleEndDateNotification";
+    public static final String SCHEDULE_NOTIFICATION_ID = "scheduleRepeatNotificationId";
+    public static final String SCHEDULE_TASK = "scheduleTaskNotificationId";
+
     private String scheduleStartDate;
     private String scheduleEndDate;
     private String scheduleStartTime;
@@ -201,7 +209,8 @@ public class MainActivityScheduleManager extends AppCompatActivity {
                 String scheduleTimeHour = data.getStringExtra("scheduleTimeHour");
                 String scheduleTimeMinute = data.getStringExtra("scheduleTimeMinute");
                 taskList = data.getStringArrayListExtra("scheduleTaskLists");
-                scheduleModalArrayList.add(new ScheduleModal(scheduleName, scheduleStartDate, scheduleEndDate, scheduleStartTime, scheduleEndTime, taskList));
+                scheduleModalArrayList.add(new ScheduleModal(scheduleName, scheduleStartDate, scheduleEndDate, scheduleStartTime,
+                        scheduleEndTime, taskList, false, 0));
                 // set visibility of sort view
                 setVisibility(buttonSort, textView);
                 // notifying adapter when new data added.
@@ -221,7 +230,8 @@ public class MainActivityScheduleManager extends AppCompatActivity {
         scheduleStartTime = data.getStringExtra("scheduleStartTimeEdit");
         scheduleEndTime = data.getStringExtra("scheduleEndTimeEdit");
         taskList = data.getStringArrayListExtra("scheduleTaskListsEdit");
-        scheduleModalArrayList.set(position, new ScheduleModal(scheduleName, scheduleStartDate, scheduleEndDate, scheduleStartTime, scheduleEndTime, taskList));
+        scheduleModalArrayList.set(position, new ScheduleModal(scheduleName, scheduleStartDate, scheduleEndDate,
+                scheduleStartTime, scheduleEndTime, taskList, false, 0));
         adapter.notifyDataSetChanged();
         saveData();
     }

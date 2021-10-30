@@ -1,6 +1,7 @@
 package com.example.pomodoroapp.schedulemanager;
 
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pomodoroapp.R;
+import com.example.pomodoroapp.todofeature.TodoModal;
+import com.example.pomodoroapp.todofeature.TodoNotificationService;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
@@ -24,6 +27,13 @@ import java.util.Calendar;
 
 import static android.content.Context.ALARM_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
+import static com.example.pomodoroapp.schedulemanager.MainActivityScheduleManager.SCHEDULE_DATE_END;
+import static com.example.pomodoroapp.schedulemanager.MainActivityScheduleManager.SCHEDULE_DATE_START;
+import static com.example.pomodoroapp.schedulemanager.MainActivityScheduleManager.SCHEDULE_END_TIME;
+import static com.example.pomodoroapp.schedulemanager.MainActivityScheduleManager.SCHEDULE_NAME;
+import static com.example.pomodoroapp.schedulemanager.MainActivityScheduleManager.SCHEDULE_NOTIFICATION_ID;
+import static com.example.pomodoroapp.schedulemanager.MainActivityScheduleManager.SCHEDULE_START_TIME;
+import static com.example.pomodoroapp.schedulemanager.MainActivityScheduleManager.SCHEDULE_TASK;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHolder> {
 
@@ -53,6 +63,13 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         ScheduleModal modal = scheduleModalArrayList.get(position);
         holder.scheduleNameTV.setText(modal.getScheduleName());
         holder.scheduleDateTV.setText(modal.getScheduleDateStart());
+
+        if(modal.isScheduleNotificationState()){
+            holder.startNotificationButton.setImageTintList(context.getResources().getColorStateList(R.color.red));
+        }
+        else{
+            holder.startNotificationButton.setImageTintList(context.getResources().getColorStateList(R.color.black));
+        }
     }
 
     @Override
@@ -97,6 +114,22 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         }
     }
 
+    private void stopNotification(ScheduleModal modal){
+        String notificationService = Context.NOTIFICATION_SERVICE;
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(notificationService);
+        notificationManager.cancel(modal.getScheduleNotificationId());
+
+        Intent intent = new Intent(context, TodoNotificationService.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, modal.getScheduleNotificationId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+
+    }
+
+    private boolean isNotificationOn(ImageButton startNotificationButton){
+        return startNotificationButton.getImageTintList() == context.getResources().getColorStateList(R.color.red);
+    }
+
 //    private int getAM_PM(String hourOfDayString){
 //        int hourOfDay = Integer.parseInt(hourOfDayString);
 //        if(hourOfDay < 12) {
@@ -109,10 +142,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageButton buttonSort;
+        private final ImageButton startNotificationButton;
         private final TextView scheduleNameTV;
         private final TextView scheduleDateTV;
         private TextView sortView;
         private ArrayList<String> scheduleTasks;
+        private boolean isOn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -124,39 +159,64 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
             ImageButton deleteButton = itemView.findViewById(R.id.idBtnDeleteSchedule);
             ImageButton taskButton = itemView.findViewById(R.id.idBtnShowTask);
             ImageButton editTaskButton = itemView.findViewById(R.id.idBtnEditSchedule);
-            Button startNotificationButton = itemView.findViewById(R.id.idBtnStartNotification);
-            final PendingIntent[] pendingIntent = new PendingIntent[1];
-            AlarmManager alarmManager;
-            alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+            startNotificationButton = itemView.findViewById(R.id.idBtnStartNotification);
 
             startNotificationButton.setOnClickListener(view -> {
-                Snackbar snackbar = Snackbar
-                        .make(view, "       This Schedule will start in given time and date.", Snackbar.LENGTH_SHORT);
-
-                snackbar.show();
                 ScheduleModal modal = scheduleModalArrayList.get(getAdapterPosition());
-                String timeText = modal.getScheduleTimeStart();
-                String[] list = timeText.split(":");
-                String dateText = modal.getScheduleDateStart();
-                String[] dateList = dateText.split("-");
-                Calendar objCalendar = Calendar.getInstance();
-                objCalendar.set(Calendar.YEAR, Integer.parseInt(dateList[2]));
-                objCalendar.set(Calendar.MONTH, Integer.parseInt(dateList[1]) - 1);
-                objCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateList[0]));
-                objCalendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(list[0]));
-                objCalendar.set(Calendar.MINUTE, Integer.parseInt(list[1]));
-                objCalendar.set(Calendar.SECOND, 0);
-                objCalendar.set(Calendar.MILLISECOND, 0);
+                if(!isNotificationOn(startNotificationButton)) {
+                    Snackbar snackbar = Snackbar
+                            .make(view, "       This Schedule will start in given time and date.", Snackbar.LENGTH_SHORT);
+                    snackbar.show();
+
+                    if (isNotificationOn(startNotificationButton)) {
+                        startNotificationButton.setImageTintList(context.getResources().getColorStateList(R.color.black));
+                        isOn = false;
+                    } else {
+                        startNotificationButton.setImageTintList(context.getResources().getColorStateList(R.color.red));
+                        isOn = true;
+                    }
+
+                    scheduleModalArrayList.set(getAdapterPosition(), new ScheduleModal(modal.getScheduleName(), modal.getScheduleDateStart(), modal.getScheduleDateEnd(),
+                            modal.getScheduleTimeStart(), modal.getScheduleTimeEnd(), modal.getScheduleTasks(), isOn, modal.getScheduleName().hashCode()));
+                    notifyDataSetChanged();
+                    saveData();
+
+                    String timeText = modal.getScheduleTimeStart();
+                    String[] list = timeText.split(":");
+                    String dateText = modal.getScheduleDateStart();
+                    String[] dateList = dateText.split("-");
+                    Calendar objCalendar = Calendar.getInstance();
+                    objCalendar.set(Calendar.YEAR, Integer.parseInt(dateList[2]));
+                    objCalendar.set(Calendar.MONTH, Integer.parseInt(dateList[1]) - 1);
+                    objCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateList[0]));
+                    objCalendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(list[0]));
+                    objCalendar.set(Calendar.MINUTE, Integer.parseInt(list[1]));
+                    objCalendar.set(Calendar.SECOND, 0);
+                    objCalendar.set(Calendar.MILLISECOND, 0);
 //                    objCalendar.set(Calendar.AM_PM, getAM_PM(list[0]));
 
-                Intent intent = new Intent(context, ExampleService.class);
-                intent.putExtra("scheduleNameNotification", modal.getScheduleName());
-                intent.putExtra("scheduleTaskNotification", modal.getScheduleTasks());
-                intent.putExtra("scheduleStartTimeNotification", modal.getScheduleTimeStart());
-                intent.putExtra("scheduleEndDateNotification", modal.getScheduleDateEnd());
-                pendingIntent[0] = PendingIntent.getForegroundService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    Intent intent = new Intent(context, ScheduleNotificationService.class);
+                    intent.putExtra(SCHEDULE_NAME, modal.getScheduleName());
+                    intent.putExtra(SCHEDULE_TASK, modal.getScheduleTasks());
+                    intent.putExtra(SCHEDULE_START_TIME, modal.getScheduleTimeStart());
+                    intent.putExtra(SCHEDULE_DATE_END, modal.getScheduleDateEnd());
+                    intent.putExtra(SCHEDULE_NOTIFICATION_ID, modal.getScheduleName().hashCode());
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, modal.getScheduleName().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, objCalendar.getTimeInMillis(), pendingIntent[0]);
+                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, objCalendar.getTimeInMillis(), pendingIntent);
+
+                }
+
+                else {
+                    stopNotification(modal);
+                    startNotificationButton.setImageTintList(context.getResources().getColorStateList(R.color.black));
+                    isOn = false;
+                    scheduleModalArrayList.set(getAdapterPosition(), new ScheduleModal(modal.getScheduleName(), modal.getScheduleDateStart(), modal.getScheduleDateEnd(),
+                            modal.getScheduleTimeStart(), modal.getScheduleTimeEnd(), modal.getScheduleTasks(), isOn, modal.getScheduleName().hashCode()));
+                    notifyDataSetChanged();
+                    saveData();
+                }
             });
 
             editTaskButton.setOnClickListener(view -> {
@@ -184,9 +244,11 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
             });
 
             deleteButton.setOnClickListener(view -> {
+                ScheduleModal modal = scheduleModalArrayList.get(getAdapterPosition());
+                stopNotification(modal);
                 sortView = viewActivity.findViewById(R.id.sortView);
                 buttonSort = viewActivity.findViewById(R.id.buttonSort);
-                Intent serviceIntent = new Intent(context, ExampleService.class);
+                Intent serviceIntent = new Intent(context, ScheduleNotificationService.class);
                 context.stopService(serviceIntent);
                 scheduleModalArrayList.remove(getAdapterPosition());
                 notifyItemRemoved(getAdapterPosition());

@@ -229,7 +229,8 @@ public class MainActivityTodo extends AppCompatActivity {
 //                String todoTimeMinute = data.getStringExtra("todoTimeMinute");
                 todoPreference = "Low";
                 todoRepeatInterval = "Everyday";
-                todoModalArrayList.add(new TodoModal(todoName, todoDate, todoTime, todoRepeatInterval, false, todoPreference, false, 0));
+                todoModalArrayList.add(new TodoModal(todoName, todoDate, todoTime, todoRepeatInterval, false,
+                        todoPreference, false, 0));
                 // notifying adapter when new data added.
                 adapter.notifyItemInserted(todoModalArrayList.size());
                 // set visibility of sort view
