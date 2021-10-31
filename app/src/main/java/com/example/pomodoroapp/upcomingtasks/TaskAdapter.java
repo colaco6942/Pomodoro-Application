@@ -18,6 +18,7 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pomodoroapp.R;
+import com.example.pomodoroapp.todofeature.MainActivityTodo;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -154,6 +155,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                     intent.putExtra("longBreakEnabled", modal.getLongBreakEnabled());
                     intent.putExtra("taskColor", modal.getTaskColor());
                     view.getContext().startActivity(intent);
+                    ((MainActivityUpcomingPomodoros)context).finish();
                 }
             });
 

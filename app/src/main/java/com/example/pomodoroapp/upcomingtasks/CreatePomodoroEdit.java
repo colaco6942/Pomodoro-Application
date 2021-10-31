@@ -252,5 +252,6 @@ public class CreatePomodoroEdit extends AppCompatActivity {
         intentTask.putExtra("taskValuePomodoroLongBreakEnabled", longBreakEnabled);
         intentTask.putExtra("taskColorEdit", taskColor);
         startActivity(intentTask);
+        finish();
     }
 }
