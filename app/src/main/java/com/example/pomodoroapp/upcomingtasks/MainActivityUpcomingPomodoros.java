@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pomodoroapp.MainActivity;
 import com.example.pomodoroapp.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -62,10 +63,15 @@ public class MainActivityUpcomingPomodoros extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + "Upcoming Tasks" + "</font>"));
         Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
-        upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
+        if(MainActivity.isDarkModeOn) {
+            MainActivity.actionBarColor(actionBar, true, "Upcoming Pomodoro");
+            upArrow.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
+        }
+        else {
+            MainActivity.actionBarColor(actionBar, false, "Upcoming Pomodoro");
+            upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
+        }
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         setContentView(R.layout.activity_main_upcoming_pomodoro);
 

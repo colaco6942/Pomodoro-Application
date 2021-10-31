@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pomodoroapp.MainActivity;
 import com.example.pomodoroapp.R;
 
 import java.util.ArrayList;
@@ -46,9 +47,15 @@ public class ScheduleMakerEdit extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + "Make Your Schedule" + "</font>"));
         Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
-        upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
+        if(MainActivity.isDarkModeOn) {
+            MainActivity.actionBarColor(actionBar, true, "Edit Your Schedule");
+            upArrow.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
+        }
+        else {
+            MainActivity.actionBarColor(actionBar, false, "Edit Your Schedule");
+            upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
+        }
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         Intent intent = getIntent();
 

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pomodoroapp.MainActivity;
 import com.example.pomodoroapp.R;
 
 public class CreatePomodoroEdit extends AppCompatActivity {
@@ -50,15 +51,19 @@ public class CreatePomodoroEdit extends AppCompatActivity {
 
         // Changing the color of action bar
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
-        upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator(upArrow);
-
         // To change the color of title name in action bar
         Intent intent = getIntent();
         titleName = intent.getStringExtra("title");
-        getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + titleName + "</font>"));
+        Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
+        if(MainActivity.isDarkModeOn) {
+            MainActivity.actionBarColor(actionBar, true, titleName);
+            upArrow.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
+        }
+        else {
+            MainActivity.actionBarColor(actionBar, false, titleName);
+            upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
+        }
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
         pomoIntervalString = intent.getStringExtra("interval");
         position = intent.getIntExtra("adapterPosition", -1);
         dateText = intent.getStringExtra("date");

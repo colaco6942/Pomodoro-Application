@@ -22,7 +22,8 @@ import com.example.pomodoroapp.upcomingtasks.MainActivityUpcomingPomodoros;
 
 public class MainActivity extends AppCompatActivity {
     public static final String CHANNEL_ID = "pomodoroChannel";
-    private ImageButton darkModeButton;
+    public ImageButton darkModeButton;
+    public static boolean isDarkModeOn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
                 "sharedPrefs", MODE_PRIVATE);
         final SharedPreferences.Editor editor
                 = sharedPreferences.edit();
-        final boolean isDarkModeOn
+
+        isDarkModeOn
                 = sharedPreferences
                 .getBoolean(
                         "isDarkModeOn", false);
@@ -52,16 +54,14 @@ public class MainActivity extends AppCompatActivity {
                     .setDefaultNightMode(
                             AppCompatDelegate
                                     .MODE_NIGHT_YES);
-            actionBar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
-            getSupportActionBar().setTitle(Html.fromHtml("<font color=\"white\">" + "Pomodoro App" + "</font>"));
+            actionBarColor(actionBar, true, "Pomodoro App");
         }
         else {
             AppCompatDelegate
                     .setDefaultNightMode(
                             AppCompatDelegate
                                     .MODE_NIGHT_NO);
-            actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-            getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + "Pomodoro App" + "</font>"));
+            actionBarColor(actionBar, false, "Pomodoro App");
         }
 
         darkModeButton.setOnClickListener(
@@ -80,8 +80,7 @@ public class MainActivity extends AppCompatActivity {
                                     .setDefaultNightMode(
                                             AppCompatDelegate
                                                     .MODE_NIGHT_NO);
-                            actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-                            getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + "Pomodoro App" + "</font>"));
+                            actionBarColor(actionBar, false, "Pomodoro App");
                             // it will set isDarkModeOn
                             // boolean to false
                             editor.putBoolean(
@@ -96,8 +95,7 @@ public class MainActivity extends AppCompatActivity {
                                             AppCompatDelegate
                                                     .MODE_NIGHT_YES);
 
-                            actionBar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
-                            getSupportActionBar().setTitle(Html.fromHtml("<font color=\"white\">" + "Pomodoro App" + "</font>"));
+                            actionBarColor(actionBar, true, "Pomodoro App");
 
                             // it will set isDarkModeOn
                             // boolean to true
@@ -107,6 +105,19 @@ public class MainActivity extends AppCompatActivity {
                         editor.apply();
                     }
                 });
+    }
+
+    public static void actionBarColor(ActionBar actionBar, boolean on, String name) {
+        assert actionBar != null;
+        if (on) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+            actionBar.setTitle(Html.fromHtml("<font color=\"white\">" + name + "</font>"));
+        }
+
+        else {
+            actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+            actionBar.setTitle(Html.fromHtml("<font color=\"black\">" + name + "</font>"));
+        }
     }
 
     public void todoActivity(View view){

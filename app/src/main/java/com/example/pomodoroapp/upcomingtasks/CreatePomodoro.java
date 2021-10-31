@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pomodoroapp.MainActivity;
 import com.example.pomodoroapp.R;
 import com.example.pomodoroapp.schedulemanager.MainActivityScheduleManager;
 
@@ -38,15 +39,19 @@ public class CreatePomodoro extends AppCompatActivity {
 
         // Changing the color of action bar
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
-        upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator(upArrow);
-
         // To change the color of title name in action bar
         Intent intent = getIntent();
         String titleName = intent.getStringExtra(MainActivityUpcomingPomodoros.EXTRA_NAME);
-        getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + titleName + "</font>"));
+        Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
+        if(MainActivity.isDarkModeOn) {
+            MainActivity.actionBarColor(actionBar, true, titleName);
+            upArrow.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
+        }
+        else {
+            MainActivity.actionBarColor(actionBar, false, titleName);
+            upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
+        }
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
         Spinner mySpinner = (Spinner) findViewById(R.id.spinner);
         Spinner mySpinnerBreakInterval = (Spinner) findViewById(R.id.spinnerBreakInterval);
