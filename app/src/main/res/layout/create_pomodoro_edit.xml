@@ -367,7 +367,7 @@
                 android:onClick="chooseColor" />
 
             <RadioButton
-                android:id="@+id/radioButtonYellow"
+                android:id="@+id/radioButtonRed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@android:drawable/checkbox_off_background"
@@ -383,11 +383,11 @@
                 android:onClick="chooseColor" />
 
             <RadioButton
-                android:id="@+id/radioButtonBlack"
+                android:id="@+id/radioButtonGray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@android:drawable/checkbox_off_background"
-                android:buttonTint="@color/black"
+                android:buttonTint="@color/textBackgroundColor"
                 android:onClick="chooseColor" />
 
             <RadioButton

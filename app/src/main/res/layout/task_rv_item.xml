@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:backgroundTint="@color/red"
+    android:backgroundTint="@color/textBackgroundColor"
     android:elevation="8dp"
     app:cardCornerRadius="8dp">
 
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:text="Task Name"
-            android:textColor="@color/white"
+            android:textColor="@color/textColor"
             android:textSize="18sp" />
 
         <!--text view for our task date-->
@@ -31,14 +31,14 @@
             android:layout_below="@id/idTaskName"
             android:padding="5dp"
             android:text="Date "
-            android:textColor="@color/white" />
+            android:textColor="@color/textColor" />
 
         <ImageButton
             android:id="@+id/idBtnDeleteTask"
             android:layout_width="39dp"
             android:layout_height="37dp"
             android:layout_alignRight="@id/idTaskName"
-            android:backgroundTint="@color/red"
+            android:backgroundTint="@color/textBackgroundColor"
             android:onClick="deleteTask"
             android:src="@drawable/ic_baseline_delete_24"
             app:tint="@color/black"
@@ -51,7 +51,7 @@
             android:layout_height="36dp"
             android:layout_alignBaseline="@id/idTaskName"
             android:layout_centerHorizontal="true"
-            android:backgroundTint="@color/red"
+            android:backgroundTint="@color/textBackgroundColor"
             android:onClick="startTask"
             android:src="@drawable/ic_baseline_not_started_24"
             app:tint="#8BC34A" />
@@ -61,7 +61,7 @@
             android:layout_width="39dp"
             android:layout_height="37dp"
             android:layout_marginLeft="320dp"
-            android:backgroundTint="@color/red"
+            android:backgroundTint="@color/textBackgroundColor"
             android:src="@drawable/ic_baseline_edit_24"
             app:tint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
@@ -75,7 +75,7 @@
             android:gravity="end"
             android:padding="5dp"
             android:text="Interval "
-            android:textColor="@color/white" />
+            android:textColor="@color/textColor" />
 
 
     </RelativeLayout>

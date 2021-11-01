@@ -13,6 +13,6 @@
     <color name="gray">#C6C6C6</color>
 
     <color name="backgroundColor">#FCFCFC</color>
-    <color name="textColor">#000000</color>
+    <color name="textColor">@color/black</color>
     <color name="textBackgroundColor">#ECE4E4</color>
 </resources>

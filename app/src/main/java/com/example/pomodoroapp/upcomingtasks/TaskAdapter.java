@@ -67,10 +67,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             }
         }
         catch (Exception exception){
-            holder.cardView.setBackgroundTintList(context.getResources().getColorStateList(R.color.red));
-            holder.startTaskButton.setBackgroundTintList(context.getResources().getColorStateList(R.color.red));
-            holder.deleteButton.setBackgroundTintList(context.getResources().getColorStateList(R.color.red));
-            holder.editTaskButton.setBackgroundTintList(context.getResources().getColorStateList(R.color.red));
+            holder.cardView.setBackgroundTintList(context.getResources().getColorStateList(R.color.textBackgroundColor));
+            holder.startTaskButton.setBackgroundTintList(context.getResources().getColorStateList(R.color.textBackgroundColor));
+            holder.deleteButton.setBackgroundTintList(context.getResources().getColorStateList(R.color.textBackgroundColor));
+            holder.editTaskButton.setBackgroundTintList(context.getResources().getColorStateList(R.color.textBackgroundColor));
         }
 
     }
