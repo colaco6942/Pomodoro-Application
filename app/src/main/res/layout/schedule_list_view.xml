@@ -71,13 +71,13 @@
         <ImageButton
             android:id="@+id/idBtnShowTask"
             android:layout_width="wrap_content"
-            android:layout_marginTop="40dp"
             android:layout_height="40dp"
+            android:layout_marginTop="40dp"
             android:backgroundTint="@color/textBackgroundColor"
-            android:src="@drawable/ic_outline_run_circle_24"
-            app:tint="@color/black"
+            android:src="@drawable/round_task_24"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:tint="@color/black" />
 
     </RelativeLayout>
 
