@@ -36,8 +36,6 @@ public class CreatePomodoroEdit extends AppCompatActivity {
     private String pomodoroString;
     private String dateText = "No Date Given";
     private String longBreak;
-    private String timeTextMinute;
-    private String timeTextHour;
     private String timeText;
     private String titleName;
     private boolean longBreakEnabled;
@@ -67,6 +65,9 @@ public class CreatePomodoroEdit extends AppCompatActivity {
         pomoIntervalString = intent.getStringExtra("interval");
         position = intent.getIntExtra("adapterPosition", -1);
         dateText = intent.getStringExtra("date");
+        timeText = intent.getStringExtra("time");
+        timeView = findViewById(R.id.timeText);
+        timeView.setText(timeText);
         dateView = findViewById(R.id.dateText);
         dateView.setText(dateText);
         titleView = findViewById(R.id.nameText);
@@ -225,8 +226,8 @@ public class CreatePomodoroEdit extends AppCompatActivity {
         // Setting 2 for catching calender result activity
         else if (requestCode == 2){
             if (resultCode == RESULT_OK){
-                timeTextHour = data.getStringExtra("timeValueHour");
-                timeTextMinute = data.getStringExtra("timeValueMinute");
+                String timeTextHour = data.getStringExtra("timeValueHour");
+                String timeTextMinute = data.getStringExtra("timeValueMinute");
                 timeText = timeTextHour + ":" + timeTextMinute;
                 timeView = findViewById(R.id.timeText);
                 timeView.setText(timeText);

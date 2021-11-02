@@ -147,6 +147,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                     Intent intent = new Intent(view.getContext(), CreatePomodoroEdit.class);
                     intent.putExtra("adapterPosition", getAdapterPosition());
                     intent.putExtra("date", taskDateTV.getText().toString());
+                    intent.putExtra("time", modal.getTaskTime());
                     intent.putExtra("title", taskNameTV.getText().toString());
                     intent.putExtra("interval", taskPomodoroIntervalTV.getText().toString());
                     intent.putExtra("longBreak", modal.getTaskLongBreak());

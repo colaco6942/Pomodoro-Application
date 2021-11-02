@@ -242,7 +242,7 @@ public class MainActivityUpcomingPomodoros extends AppCompatActivity {
         longBreakEnable = data.getBooleanExtra("taskValuePomodoroLongBreakEnabled", false);
         taskColor = data.getIntExtra("taskColorEdit", R.color.red);
 
-        taskModalArrayList.set(position, new TaskModal(title, pomodoroDate, pomodoroInterval, pomodoroNumber, breakInterval, pomodoroLongBreak, longBreakEnable, taskColor));
+        taskModalArrayList.set(position, new TaskModal(title, pomodoroDate, pomodoroTime, pomodoroInterval, pomodoroNumber, breakInterval, pomodoroLongBreak, longBreakEnable, taskColor));
         adapter.notifyDataSetChanged();
         saveData();
     }
@@ -283,7 +283,7 @@ public class MainActivityUpcomingPomodoros extends AppCompatActivity {
                 imageView.setVisibility(View.INVISIBLE);
                 textView.setVisibility(View.INVISIBLE);
 
-                taskModalArrayList.add(new TaskModal(taskNameEdt.getText().toString(), pomodoroDate, pomodoroInterval, pomodoroNumber, breakInterval, pomodoroLongBreak, longBreakEnable, taskColor));
+                taskModalArrayList.add(new TaskModal(taskNameEdt.getText().toString(), pomodoroDate, pomodoroTime, pomodoroInterval, pomodoroNumber, breakInterval, pomodoroLongBreak, longBreakEnable, taskColor));
                 // notifying adapter when new data added.
                 adapter.notifyItemInserted(taskModalArrayList.size());
                 // set visibility of sort view

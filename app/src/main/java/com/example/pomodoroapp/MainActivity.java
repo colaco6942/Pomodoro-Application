@@ -20,6 +20,11 @@ import com.example.pomodoroapp.schedulemanager.MainActivityScheduleManager;
 import com.example.pomodoroapp.todofeature.MainActivityTodo;
 import com.example.pomodoroapp.upcomingtasks.MainActivityUpcomingPomodoros;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
     public static final String CHANNEL_ID = "pomodoroChannel";
     public ImageButton darkModeButton;
@@ -118,6 +123,14 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
             actionBar.setTitle(Html.fromHtml("<font color=\"black\">" + name + "</font>"));
         }
+    }
+
+    public static String getCurrentDate() {
+        return new SimpleDateFormat("d-MM-yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
+    }
+
+    public static String getCurrentTime() {
+        return new SimpleDateFormat("H:mm", Locale.getDefault()).format(new Date());
     }
 
     public void todoActivity(View view){

@@ -116,13 +116,14 @@
             android:id="@+id/timeText"
             android:layout_width="111dp"
             android:layout_height="47dp"
-            android:layout_marginStart="129dp"
             android:layout_marginTop="376dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:textAlignment="center"
             android:textColor="#817D7D"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton"
+            app:layout_constraintHorizontal_bias="0.683"
+            app:layout_constraintStart_toEndOf="@+id/textView7"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton

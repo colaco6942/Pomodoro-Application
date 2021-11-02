@@ -36,6 +36,10 @@ public class ScheduleMaker extends AppCompatActivity {
     private String endTimeText = "";
     private ArrayList<String> items;
     private ArrayAdapter<String> itemsAdapter;
+    private EditText endTimeView;
+    private EditText startTimeView;
+    private EditText endingDateView;
+    private EditText startingDateView;
     ListView listView;
 
     @Override
@@ -56,6 +60,19 @@ public class ScheduleMaker extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
         scheduleNameET = findViewById(R.id.scheduleName);
+        startTimeView = findViewById(R.id.timeTextStarting);
+        endTimeView = findViewById(R.id.timeTextEnding);
+        endingDateView = findViewById(R.id.dateTextEnding);
+        startingDateView = findViewById(R.id.startingDateText);
+        startingDateText = MainActivity.getCurrentDate();
+        endingDateText = MainActivity.getCurrentDate();
+        startTimeText = MainActivity.getCurrentTime();
+        endTimeText = MainActivity.getCurrentTime();
+
+        startingDateView.setText(startingDateText);
+        endingDateView.setText(endingDateText);
+        startTimeView.setText(startTimeText);
+        endTimeView.setText(endTimeText);
 
         listView = findViewById(R.id.listView);
         ImageButton imageButton = findViewById(R.id.addIcon);
@@ -123,14 +140,12 @@ public class ScheduleMaker extends AppCompatActivity {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 startingDateText = data.getStringExtra("dateValue");
-                EditText startingDateView = findViewById(R.id.startingDateText);
                 startingDateView.setText(startingDateText);
             }
         }
         else if (requestCode == 2){
             if (resultCode == RESULT_OK){
                 endingDateText = data.getStringExtra("dateValue");
-                EditText endingDateView = findViewById(R.id.dateTextEnding);
                 endingDateView.setText(endingDateText);
             }
         }
@@ -139,7 +154,6 @@ public class ScheduleMaker extends AppCompatActivity {
                 startTimeTextHour = data.getStringExtra("timeValueHour");
                 startTimeTextMinute = data.getStringExtra("timeValueMinute");
                 startTimeText = startTimeTextHour + ":" + startTimeTextMinute;
-                EditText startTimeView = findViewById(R.id.timeTextStarting);
                 startTimeView.setText(startTimeText);
             }
         }
@@ -148,7 +162,6 @@ public class ScheduleMaker extends AppCompatActivity {
                 String endTimeTextHour = data.getStringExtra("timeValueHour");
                 String endTimeTextMinute = data.getStringExtra("timeValueMinute");
                 endTimeText = endTimeTextHour + ":" + endTimeTextMinute;
-                EditText endTimeView = findViewById(R.id.timeTextEnding);
                 endTimeView.setText(endTimeText);
             }
         }
@@ -164,8 +177,6 @@ public class ScheduleMaker extends AppCompatActivity {
         }
         else {
             Intent intentTask = new Intent(this, MainActivityScheduleManager.class);
-//        startTimeText = "12:12";
-//            endTimeText = "13:15";
             intentTask.putExtra("scheduleTaskLists", items);
             intentTask.putExtra("scheduleName", scheduleName);
             intentTask.putExtra("scheduleStartDate", startingDateText);
@@ -178,5 +189,4 @@ public class ScheduleMaker extends AppCompatActivity {
             finish();
         }
     }
-
 }
