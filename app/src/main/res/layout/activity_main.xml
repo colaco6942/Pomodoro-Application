@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/backgroundColor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
@@ -14,8 +15,8 @@
         android:layout_marginTop="40dp"
         android:onClick="todoActivity"
         android:text="Task"
-        android:textColor="@color/black"
-        android:backgroundTint="#F4F2F2"
+        android:textColor="@color/textColor"
+        android:backgroundTint="@color/textBackgroundColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,24 +28,34 @@
         android:layout_marginTop="100dp"
         android:onClick="scheduleActivity"
         android:text="Schedule"
-        android:textColor="@color/black"
-        android:backgroundTint="#F4F2F2"
+        android:textColor="@color/textColor"
+        android:backgroundTint="@color/textBackgroundColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
- <Button
+     <Button
         android:id="@+id/buttonUpcomingPomodoro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="160dp"
         android:onClick="upcomingPomodoroActivity"
         android:text="Upcoming pomodoro"
-        android:textColor="@color/black"
-        android:backgroundTint="#F4F2F2"
+        android:textColor="@color/textColor"
+        android:backgroundTint="@color/textBackgroundColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageButton
+        android:id="@+id/darkModeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/backgroundColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_invert_colors_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

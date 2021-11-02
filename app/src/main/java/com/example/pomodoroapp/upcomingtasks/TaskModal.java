@@ -13,9 +13,10 @@ public class TaskModal {
     private int taskColor;
     private boolean longBreakEnable;
 
-    public TaskModal(String taskName, String taskDate, String taskPomodoroInterval, String taskPomodoroNumber, String taskBreakInterval, String taskLongBreak, boolean longBreakEnable, int taskColor){
+    public TaskModal(String taskName, String taskDate, String taskTime, String taskPomodoroInterval, String taskPomodoroNumber, String taskBreakInterval, String taskLongBreak, boolean longBreakEnable, int taskColor){
         this.taskName = taskName;
         this.taskDate = taskDate;
+        this.taskTime = taskTime;
         this.taskPomodoroInterval = taskPomodoroInterval;
         this.taskPomodoroNumber = taskPomodoroNumber;
         this.taskBreakInterval = taskBreakInterval;

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     tools:context=".todofeature.MainActivityTodo">
 
     <Button
@@ -14,7 +15,7 @@
         android:onClick="startTodoActivity"
         android:text="Add task"
         android:textColor="@color/black"
-        android:backgroundTint="#F4F2F2"
+        android:backgroundTint="@color/textBackgroundColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +36,7 @@
         android:layout_width="41dp"
         android:layout_height="35dp"
         android:layout_marginTop="128dp"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/backgroundColor"
         android:src="@drawable/ic_baseline_sort_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.956"

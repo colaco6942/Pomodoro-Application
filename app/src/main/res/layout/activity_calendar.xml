@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/textBackgroundColor"
     tools:context=".MainActivity">
 
     <!-- Add TextView to display the date -->
@@ -15,7 +16,7 @@
         android:layout_marginLeft="150dp"
         android:layout_marginTop="20dp"
         android:text="Set the Date"
-        android:textColor="@android:color/background_dark"
+        android:textColor="@color/textColor"
         android:textStyle="bold" />
 
     <!-- Add CalendarView to display the Calendar -->

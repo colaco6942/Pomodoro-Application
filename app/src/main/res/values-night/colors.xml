@@ -12,7 +12,8 @@
     <color name="orange">#FF9800</color>
     <color name="gray">#C6C6C6</color>
 
-    <color name="backgroundColor">#FCFCFC</color>
+<!--    Dark Mode-->
+    <color name="backgroundColor">#212121</color>
     <color name="textColor">@color/black</color>
-    <color name="textBackgroundColor">#ECE4E4</color>
+    <color name="textBackgroundColor">#4C3F3F</color>
 </resources>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/backgroundColor"
     tools:context=".MainActivity">
 
     <!--    <LinearLayout-->
@@ -58,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="65dp"
-        android:background="@color/white"
+        android:background="@color/backgroundColor"
         android:onClick="newTaskActivity"
         android:src="@drawable/ic_baseline_add_box_24"
         app:tint="@color/black"
@@ -83,7 +83,7 @@
         android:layout_width="41dp"
         android:layout_height="35dp"
         android:layout_marginTop="128dp"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/backgroundColor"
         android:src="@drawable/ic_baseline_sort_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.956"

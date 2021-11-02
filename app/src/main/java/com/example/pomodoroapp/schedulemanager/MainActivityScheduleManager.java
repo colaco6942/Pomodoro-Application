@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pomodoroapp.MainActivity;
 import com.example.pomodoroapp.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -56,10 +57,15 @@ public class MainActivityScheduleManager extends AppCompatActivity {
         setContentView(R.layout.activity_main_schedule);
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + "Schedule Manager" + "</font>"));
         Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
-        upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
+        if(MainActivity.isDarkModeOn) {
+            MainActivity.actionBarColor(actionBar, true, "Schedule Manager");
+            upArrow.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
+        }
+        else {
+            MainActivity.actionBarColor(actionBar, false, "Schedule Manager");
+            upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
+        }
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         scheduleRV = findViewById(R.id.idRVSchedules);
         buttonSort = findViewById(R.id.buttonSort);

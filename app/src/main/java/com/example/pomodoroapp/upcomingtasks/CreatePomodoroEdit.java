@@ -19,6 +19,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pomodoroapp.MainActivity;
 import com.example.pomodoroapp.R;
 
 public class CreatePomodoroEdit extends AppCompatActivity {
@@ -35,8 +36,6 @@ public class CreatePomodoroEdit extends AppCompatActivity {
     private String pomodoroString;
     private String dateText = "No Date Given";
     private String longBreak;
-    private String timeTextMinute;
-    private String timeTextHour;
     private String timeText;
     private String titleName;
     private boolean longBreakEnabled;
@@ -50,18 +49,25 @@ public class CreatePomodoroEdit extends AppCompatActivity {
 
         // Changing the color of action bar
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
-        upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator(upArrow);
-
         // To change the color of title name in action bar
         Intent intent = getIntent();
         titleName = intent.getStringExtra("title");
-        getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + titleName + "</font>"));
+        Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
+        if(MainActivity.isDarkModeOn) {
+            MainActivity.actionBarColor(actionBar, true, titleName);
+            upArrow.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
+        }
+        else {
+            MainActivity.actionBarColor(actionBar, false, titleName);
+            upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
+        }
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
         pomoIntervalString = intent.getStringExtra("interval");
         position = intent.getIntExtra("adapterPosition", -1);
         dateText = intent.getStringExtra("date");
+        timeText = intent.getStringExtra("time");
+        timeView = findViewById(R.id.timeText);
+        timeView.setText(timeText);
         dateView = findViewById(R.id.dateText);
         dateView.setText(dateText);
         titleView = findViewById(R.id.nameText);
@@ -170,14 +176,14 @@ public class CreatePomodoroEdit extends AppCompatActivity {
             taskColor = R.color.purple_200;
         }
 
-        else if(selectedId == R.id.radioButtonYellow){
+        else if(selectedId == R.id.radioButtonRed){
             textView.setText("Red");
             taskColor = R.color.red;
         }
 
-        else if(selectedId == R.id.radioButtonBlack){
-            textView.setText("Black");
-            taskColor = R.color.black;
+        else if(selectedId == R.id.radioButtonGray){
+            textView.setText("Gray");
+            taskColor = R.color.textBackgroundColor;
         }
 
         else if(selectedId == R.id.radioButtonGreen){
@@ -220,8 +226,8 @@ public class CreatePomodoroEdit extends AppCompatActivity {
         // Setting 2 for catching calender result activity
         else if (requestCode == 2){
             if (resultCode == RESULT_OK){
-                timeTextHour = data.getStringExtra("timeValueHour");
-                timeTextMinute = data.getStringExtra("timeValueMinute");
+                String timeTextHour = data.getStringExtra("timeValueHour");
+                String timeTextMinute = data.getStringExtra("timeValueMinute");
                 timeText = timeTextHour + ":" + timeTextMinute;
                 timeView = findViewById(R.id.timeText);
                 timeView.setText(timeText);
@@ -247,5 +253,6 @@ public class CreatePomodoroEdit extends AppCompatActivity {
         intentTask.putExtra("taskValuePomodoroLongBreakEnabled", longBreakEnabled);
         intentTask.putExtra("taskColorEdit", taskColor);
         startActivity(intentTask);
+        finish();
     }
 }

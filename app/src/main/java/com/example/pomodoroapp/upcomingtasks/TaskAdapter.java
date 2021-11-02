@@ -18,6 +18,7 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pomodoroapp.R;
+import com.example.pomodoroapp.todofeature.MainActivityTodo;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -66,10 +67,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             }
         }
         catch (Exception exception){
-            holder.cardView.setBackgroundTintList(context.getResources().getColorStateList(R.color.red));
-            holder.startTaskButton.setBackgroundTintList(context.getResources().getColorStateList(R.color.red));
-            holder.deleteButton.setBackgroundTintList(context.getResources().getColorStateList(R.color.red));
-            holder.editTaskButton.setBackgroundTintList(context.getResources().getColorStateList(R.color.red));
+            holder.cardView.setBackgroundTintList(context.getResources().getColorStateList(R.color.textBackgroundColor));
+            holder.startTaskButton.setBackgroundTintList(context.getResources().getColorStateList(R.color.textBackgroundColor));
+            holder.deleteButton.setBackgroundTintList(context.getResources().getColorStateList(R.color.textBackgroundColor));
+            holder.editTaskButton.setBackgroundTintList(context.getResources().getColorStateList(R.color.textBackgroundColor));
         }
 
     }
@@ -146,6 +147,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                     Intent intent = new Intent(view.getContext(), CreatePomodoroEdit.class);
                     intent.putExtra("adapterPosition", getAdapterPosition());
                     intent.putExtra("date", taskDateTV.getText().toString());
+                    intent.putExtra("time", modal.getTaskTime());
                     intent.putExtra("title", taskNameTV.getText().toString());
                     intent.putExtra("interval", taskPomodoroIntervalTV.getText().toString());
                     intent.putExtra("longBreak", modal.getTaskLongBreak());
@@ -154,6 +156,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                     intent.putExtra("longBreakEnabled", modal.getLongBreakEnabled());
                     intent.putExtra("taskColor", modal.getTaskColor());
                     view.getContext().startActivity(intent);
+                    ((MainActivityUpcomingPomodoros)context).finish();
                 }
             });
 
