@@ -17,12 +17,12 @@ public class Progress_Manager extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
-        if(MainActivity.isDarkModeOn) {
-            MainActivity.actionBarColor(actionBar, true, "Progress Tracker");
+        if(MainActivityHomePage.isDarkModeOn) {
+            MainActivityHomePage.actionBarColor(actionBar, true, "Progress Tracker");
             upArrow.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
         }
         else {
-            MainActivity.actionBarColor(actionBar, false, "Progress Tracker");
+            MainActivityHomePage.actionBarColor(actionBar, false, "Progress Tracker");
             upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
         }
         getSupportActionBar().setHomeAsUpIndicator(upArrow);

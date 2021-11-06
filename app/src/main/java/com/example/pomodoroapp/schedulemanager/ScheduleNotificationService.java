@@ -1,14 +1,10 @@
 package com.example.pomodoroapp.schedulemanager;
 
-import android.app.Notification;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.IBinder;
 
-import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
@@ -16,9 +12,8 @@ import com.example.pomodoroapp.R;
 
 import java.util.ArrayList;
 
-import static com.example.pomodoroapp.MainActivity.CHANNEL_ID;
+import static com.example.pomodoroapp.MainActivityHomePage.CHANNEL_ID;
 import static com.example.pomodoroapp.schedulemanager.MainActivityScheduleManager.SCHEDULE_DATE_END;
-import static com.example.pomodoroapp.schedulemanager.MainActivityScheduleManager.SCHEDULE_END_TIME;
 import static com.example.pomodoroapp.schedulemanager.MainActivityScheduleManager.SCHEDULE_NAME;
 import static com.example.pomodoroapp.schedulemanager.MainActivityScheduleManager.SCHEDULE_NOTIFICATION_ID;
 import static com.example.pomodoroapp.schedulemanager.MainActivityScheduleManager.SCHEDULE_START_TIME;

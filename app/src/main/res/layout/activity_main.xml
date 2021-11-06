@@ -2,96 +2,48 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/menu_button"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/philippine">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="215dp"
-        android:layout_height="217dp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:layout_width="410dp"
+        android:layout_height="440dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/pomodoro"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/timer" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/darkModeButton"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
-        android:backgroundTint="@color/backgroundColor"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/bangers"
+        android:text="@string/pomodoro"
+        android:textAlignment="center"
+        android:textSize="70sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_invert_colors_24" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="133dp"
-        android:layout_height="60dp"
-        android:background="@drawable/rounded_corner"
-        android:text="START"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#FF0057"
-        android:textSize="25dp"
-        app:backgroundTint="@color/textBackgroundColor"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="365dp"
-        android:layout_height="57dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/antic"
+        android:text="@string/tag"
+        android:textAlignment="center"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button">
-
-        <ImageView
-            android:id="@+id/create_task"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/create_task" />
-
-        <ImageView
-            android:id="@+id/focus_mode"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/focus_mode" />
-
-        <ImageView
-            android:id="@+id/upcoming_task"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/upcoming_task" />
-    </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/menu"
-        android:layout_width="70dp"
-        android:layout_height="26dp"
-
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        android:background="#00FFFFFF"
-        android:scrollbarSize="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.219"
-        app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
-
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

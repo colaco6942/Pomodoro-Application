@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
@@ -20,16 +18,14 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pomodoroapp.MainActivity;
+import com.example.pomodoroapp.MainActivityHomePage;
 import com.example.pomodoroapp.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Objects;
 
 public class MainActivityTodo extends AppCompatActivity {
@@ -58,12 +54,12 @@ public class MainActivityTodo extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
-        if(MainActivity.isDarkModeOn) {
-            MainActivity.actionBarColor(actionBar, true, "Todo");
+        if(MainActivityHomePage.isDarkModeOn) {
+            MainActivityHomePage.actionBarColor(actionBar, true, "Todo");
             upArrow.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
         }
         else {
-            MainActivity.actionBarColor(actionBar, false, "Todo");
+            MainActivityHomePage.actionBarColor(actionBar, false, "Todo");
             upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
         }
         getSupportActionBar().setHomeAsUpIndicator(upArrow);

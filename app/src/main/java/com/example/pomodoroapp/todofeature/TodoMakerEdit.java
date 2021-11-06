@@ -3,10 +3,8 @@ package com.example.pomodoroapp.todofeature;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,7 +16,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
-import com.example.pomodoroapp.MainActivity;
+import com.example.pomodoroapp.MainActivityHomePage;
 import com.example.pomodoroapp.R;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -64,12 +62,12 @@ public class TodoMakerEdit extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
-        if(MainActivity.isDarkModeOn) {
-            MainActivity.actionBarColor(actionBar, true, "Edit Your Todo");
+        if(MainActivityHomePage.isDarkModeOn) {
+            MainActivityHomePage.actionBarColor(actionBar, true, "Edit Your Todo");
             upArrow.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
         }
         else {
-            MainActivity.actionBarColor(actionBar, false, "Edit Your Todo");
+            MainActivityHomePage.actionBarColor(actionBar, false, "Edit Your Todo");
             upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
         }
         getSupportActionBar().setHomeAsUpIndicator(upArrow);

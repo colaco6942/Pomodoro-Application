@@ -4,13 +4,12 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import com.example.pomodoroapp.R;
-import java.util.concurrent.ThreadLocalRandom;
-import static com.example.pomodoroapp.MainActivity.CHANNEL_ID;
+
+import static com.example.pomodoroapp.MainActivityHomePage.CHANNEL_ID;
 import static com.example.pomodoroapp.todofeature.MainActivityTodo.TODO_NAME;
 import static com.example.pomodoroapp.todofeature.MainActivityTodo.TODO_NOTIFICATION_ID;
 import static com.example.pomodoroapp.todofeature.MainActivityTodo.TODO_REPEAT_ENABLE;

@@ -14,7 +14,7 @@ import android.widget.Spinner;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.pomodoroapp.MainActivity;
+import com.example.pomodoroapp.MainActivityHomePage;
 import com.example.pomodoroapp.R;
 
 public class CreatePomodoro extends AppCompatActivity {
@@ -38,20 +38,20 @@ public class CreatePomodoro extends AppCompatActivity {
         Intent intent = getIntent();
         String titleName = intent.getStringExtra(MainActivityUpcomingPomodoros.EXTRA_NAME);
         Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
-        if(MainActivity.isDarkModeOn) {
-            MainActivity.actionBarColor(actionBar, true, titleName);
+        if(MainActivityHomePage.isDarkModeOn) {
+            MainActivityHomePage.actionBarColor(actionBar, true, titleName);
             upArrow.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
         }
         else {
-            MainActivity.actionBarColor(actionBar, false, titleName);
+            MainActivityHomePage.actionBarColor(actionBar, false, titleName);
             upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
         }
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
         timeView = findViewById(R.id.timeText);
         dateView = findViewById(R.id.dateText);
-        timeText = MainActivity.getCurrentTime();
-        dateText = MainActivity.getCurrentDate();
+        timeText = MainActivityHomePage.getCurrentTime();
+        dateText = MainActivityHomePage.getCurrentDate();
 
         timeView.setText(timeText);
         dateView.setText(dateText);

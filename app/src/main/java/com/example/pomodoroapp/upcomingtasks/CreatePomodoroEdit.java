@@ -3,10 +3,8 @@ package com.example.pomodoroapp.upcomingtasks;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,7 +17,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.pomodoroapp.MainActivity;
+import com.example.pomodoroapp.MainActivityHomePage;
 import com.example.pomodoroapp.R;
 
 public class CreatePomodoroEdit extends AppCompatActivity {
@@ -53,12 +51,12 @@ public class CreatePomodoroEdit extends AppCompatActivity {
         Intent intent = getIntent();
         titleName = intent.getStringExtra("title");
         Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
-        if(MainActivity.isDarkModeOn) {
-            MainActivity.actionBarColor(actionBar, true, titleName);
+        if(MainActivityHomePage.isDarkModeOn) {
+            MainActivityHomePage.actionBarColor(actionBar, true, titleName);
             upArrow.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
         }
         else {
-            MainActivity.actionBarColor(actionBar, false, titleName);
+            MainActivityHomePage.actionBarColor(actionBar, false, titleName);
             upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
         }
         getSupportActionBar().setHomeAsUpIndicator(upArrow);

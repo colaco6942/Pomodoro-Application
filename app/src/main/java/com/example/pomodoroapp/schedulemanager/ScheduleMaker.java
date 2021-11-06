@@ -4,11 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -19,7 +16,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.pomodoroapp.MainActivity;
+import com.example.pomodoroapp.MainActivityHomePage;
 import com.example.pomodoroapp.R;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -49,12 +46,12 @@ public class ScheduleMaker extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
-        if(MainActivity.isDarkModeOn) {
-            MainActivity.actionBarColor(actionBar, true, "Create Your Schedule");
+        if(MainActivityHomePage.isDarkModeOn) {
+            MainActivityHomePage.actionBarColor(actionBar, true, "Create Your Schedule");
             upArrow.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
         }
         else {
-            MainActivity.actionBarColor(actionBar, false, "Create Your Schedule");
+            MainActivityHomePage.actionBarColor(actionBar, false, "Create Your Schedule");
             upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
         }
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
@@ -64,10 +61,10 @@ public class ScheduleMaker extends AppCompatActivity {
         endTimeView = findViewById(R.id.timeTextEnding);
         endingDateView = findViewById(R.id.dateTextEnding);
         startingDateView = findViewById(R.id.startingDateText);
-        startingDateText = MainActivity.getCurrentDate();
-        endingDateText = MainActivity.getCurrentDate();
-        startTimeText = MainActivity.getCurrentTime();
-        endTimeText = MainActivity.getCurrentTime();
+        startingDateText = MainActivityHomePage.getCurrentDate();
+        endingDateText = MainActivityHomePage.getCurrentDate();
+        startTimeText = MainActivityHomePage.getCurrentTime();
+        endTimeText = MainActivityHomePage.getCurrentTime();
 
         startingDateView.setText(startingDateText);
         endingDateView.setText(endingDateText);

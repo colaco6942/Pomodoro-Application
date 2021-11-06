@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -13,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.example.pomodoroapp.MainActivity;
+import com.example.pomodoroapp.MainActivityHomePage;
 import com.example.pomodoroapp.R;
 
 public class OnBoarding extends AppCompatActivity {
@@ -29,6 +30,8 @@ public class OnBoarding extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
+        getSupportActionBar().hide(); // hide the title bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_on_boarding);
 
@@ -45,14 +48,14 @@ public class OnBoarding extends AppCompatActivity {
         viewPager.addOnPageChangeListener(changeListener);
     }
     public void skip(View view){
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, MainActivityHomePage.class));
         finish();
     }
     public void next(View view){
        viewPager.setCurrentItem(CurrentPos + 1);
     }
     public void letsGetStarted(View view){
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, MainActivityHomePage.class));
         finish();
     }
     private void addDots(int position) {

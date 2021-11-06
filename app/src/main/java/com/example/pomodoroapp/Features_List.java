@@ -30,12 +30,12 @@ public class Features_List extends AppCompatActivity implements RecyclerViewAdap
         recyclerView = findViewById(R.id.recycler_view);
         ActionBar actionBar = getSupportActionBar();
         Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
-        if(MainActivity.isDarkModeOn) {
-            MainActivity.actionBarColor(actionBar, true, "Features");
+        if(MainActivityHomePage.isDarkModeOn) {
+            MainActivityHomePage.actionBarColor(actionBar, true, "Features");
             upArrow.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
         }
         else {
-            MainActivity.actionBarColor(actionBar, false, "Features");
+            MainActivityHomePage.actionBarColor(actionBar, false, "Features");
             upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
         }
         getSupportActionBar().setHomeAsUpIndicator(upArrow);

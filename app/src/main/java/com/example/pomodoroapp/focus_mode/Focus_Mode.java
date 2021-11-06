@@ -6,31 +6,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
-import android.app.admin.DevicePolicyManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.service.notification.NotificationListenerService;
-import android.service.notification.StatusBarNotification;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.example.pomodoroapp.MainActivity;
+import com.example.pomodoroapp.MainActivityHomePage;
 import com.example.pomodoroapp.R;
-import com.example.pomodoroapp.focus_mode.Focus_RecyclerViewAdapter;
-import com.example.pomodoroapp.focus_mode.ModalClassFeatures;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,12 +35,12 @@ public class Focus_Mode extends AppCompatActivity implements Focus_RecyclerViewA
 
         ActionBar actionBar = getSupportActionBar();
         Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
-        if(MainActivity.isDarkModeOn) {
-            MainActivity.actionBarColor(actionBar, true, "Focus Mode");
+        if(MainActivityHomePage.isDarkModeOn) {
+            MainActivityHomePage.actionBarColor(actionBar, true, "Focus Mode");
             upArrow.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
         }
         else {
-            MainActivity.actionBarColor(actionBar, false, "Focus Mode");
+            MainActivityHomePage.actionBarColor(actionBar, false, "Focus Mode");
             upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
         }
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
@@ -79,7 +66,7 @@ public class Focus_Mode extends AppCompatActivity implements Focus_RecyclerViewA
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Focus_Mode.this, MainActivity.class);
+                Intent intent = new Intent(Focus_Mode.this, MainActivityHomePage.class);
                 startActivity(intent);
             }
         });
@@ -94,12 +81,12 @@ public class Focus_Mode extends AppCompatActivity implements Focus_RecyclerViewA
 
         switch(position){
             case 0:
-                intent = new Intent(context, MainActivity.class);
+                intent = new Intent(context, MainActivityHomePage.class);
                 stopLockTask();
                 context.startActivity(intent);
                 break;
             case 1:
-                intent = new Intent(context, MainActivity.class);
+                intent = new Intent(context, MainActivityHomePage.class);
                 startLockTask();
                 context.startActivity(intent);
                 break;

@@ -13,12 +13,28 @@
         android:theme="@style/Theme.PomodoroApp">
 
         <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".on_boarding_screen.OnBoarding"
+            android:exported="true" />
+
+        <activity
             android:name=".focus_mode.Focus_Mode"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivityHomePage"/>
 
         <activity
             android:name=".Features_List"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivityHomePage" />
 
         <activity android:name=".Progress_Manager"
             android:parentActivityName=".Features_List" />
@@ -42,7 +58,7 @@
         <activity
             android:name=".todofeature.MainActivityTodo"
             android:configChanges="orientation"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".MainActivityHomePage"
             android:screenOrientation="portrait" />
         <activity
             android:name=".schedulemanager.ScheduleMakerEdit"
@@ -69,7 +85,7 @@
             android:name=".schedulemanager.MainActivityScheduleManager"
             android:configChanges="orientation"
             android:exported="true"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".MainActivityHomePage"
             android:screenOrientation="portrait" />
 
         <activity
@@ -102,19 +118,17 @@
             android:name=".upcomingtasks.MainActivityUpcomingPomodoros"
             android:configChanges="orientation"
             android:exported="true"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".MainActivityHomePage"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
+            android:name=".MainActivityHomePage"
             android:configChanges="orientation"
             android:exported="true"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:screenOrientation="portrait"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <receiver android:name=".schedulemanager.ScheduleNotificationService" />
         <receiver android:name=".schedulemanager.StopNotification" />
