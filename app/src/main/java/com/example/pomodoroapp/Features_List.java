@@ -1,11 +1,15 @@
 package com.example.pomodoroapp;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 
@@ -24,14 +28,26 @@ public class Features_List extends AppCompatActivity implements RecyclerViewAdap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_features__list);
         recyclerView = findViewById(R.id.recycler_view);
+        ActionBar actionBar = getSupportActionBar();
+        Drawable upArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back_24);
+        if(MainActivity.isDarkModeOn) {
+            MainActivity.actionBarColor(actionBar, true, "Features");
+            upArrow.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
+        }
+        else {
+            MainActivity.actionBarColor(actionBar, false, "Features");
+            upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
+        }
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
         List<ModalClass> modalClassList = new ArrayList<>();
-        modalClassList.add(new ModalClass(R.drawable.ic_launcher_background,"Schedule Manager"));
-        modalClassList.add(new ModalClass(R.drawable.ic_launcher_background,"ToDo App"));
-        modalClassList.add(new ModalClass(R.drawable.ic_launcher_background,"Progress Manager"));
+        modalClassList.add(new ModalClass(R.drawable.round_task_24,"Schedule Manager"));
+        modalClassList.add(new ModalClass(R.drawable.ic_baseline_edit_24,"Create Todo"));
+        modalClassList.add(new ModalClass(R.drawable.ic_outline_assignment_24,"Progress Manager"));
 
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(modalClassList,this);
         recyclerView.setAdapter(adapter);

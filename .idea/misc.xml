@@ -18,9 +18,15 @@
         <entry key="..\:/Android Studio Projects/Pomodoro App/app/src/main/res/layout/task_rv_item.xml" value="0.33" />
         <entry key="..\:/Android Studio Projects/Pomodoro App/app/src/main/res/layout/todo_list_view.xml" value="0.21770833333333334" />
         <entry key="..\:/Pomodoro Application/app/src/main/res/drawable/corner_curve.xml" value="0.32083333333333336" />
+        <entry key="..\:/Pomodoro Application/app/src/main/res/drawable/next_btn.xml" value="0.32083333333333336" />
+        <entry key="..\:/Pomodoro Application/app/src/main/res/font/antic.xml" value="0.33489583333333334" />
         <entry key="..\:/Pomodoro Application/app/src/main/res/layout/activity_create__task.xml" value="0.3046875" />
         <entry key="..\:/Pomodoro Application/app/src/main/res/layout/activity_features__list.xml" value="0.3046875" />
+        <entry key="..\:/Pomodoro Application/app/src/main/res/layout/activity_home_page.xml" value="0.3046875" />
         <entry key="..\:/Pomodoro Application/app/src/main/res/layout/activity_main.xml" value="0.3046875" />
+        <entry key="..\:/Pomodoro Application/app/src/main/res/layout/activity_main_splash_screen.xml" value="0.2578125" />
+        <entry key="..\:/Pomodoro Application/app/src/main/res/layout/activity_main_upcoming_pomodoro.xml" value="0.3046875" />
+        <entry key="..\:/Pomodoro Application/app/src/main/res/layout/activity_on_boarding.xml" value="0.1640625" />
       </map>
     </option>
   </component>

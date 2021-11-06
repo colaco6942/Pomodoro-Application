@@ -12,6 +12,12 @@
     <color name="orange">#FF9800</color>
     <color name="gray">#C6C6C6</color>
 
+    <color name="SUN">#FFCC33</color>
+    <color name="Matallic">#FDCC0D</color>
+    <color name="Tangerine">#FFCC00</color>
+    <color name="philippine">#FECB00</color>
+    <color name="Google">#FFCE44</color>
+
     <color name="backgroundColor">#FCFCFC</color>
     <color name="textColor">@color/black</color>
     <color name="textBackgroundColor">#ECE4E4</color>

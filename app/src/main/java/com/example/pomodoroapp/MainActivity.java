@@ -12,12 +12,17 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Html;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.pomodoroapp.focus_mode.Focus_Mode;
+import com.example.pomodoroapp.on_boarding_screen.OnBoarding;
 import com.example.pomodoroapp.schedulemanager.MainActivityScheduleManager;
 import com.example.pomodoroapp.todofeature.MainActivityTodo;
 import com.example.pomodoroapp.upcomingtasks.MainActivityUpcomingPomodoros;
@@ -28,6 +33,13 @@ import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+    private static int SPLASH_SCREEN = 3000;
+
+    //Variables
+    Animation topAnim, bottomAnim;
+    ImageView image;
+    TextView logo, slogan;
+
     public static final String CHANNEL_ID = "pomodoroChannel";
     public ImageButton darkModeButton;
     public static boolean isDarkModeOn;
@@ -46,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         createTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,Create_Task.class);
+                Intent intent = new Intent(MainActivity.this,MainActivityUpcomingPomodoros.class);
                 startActivity(intent);
             }
         });
