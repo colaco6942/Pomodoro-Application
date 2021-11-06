@@ -15,7 +15,9 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
+import com.example.pomodoroapp.focus_mode.Focus_Mode;
 import com.example.pomodoroapp.schedulemanager.MainActivityScheduleManager;
 import com.example.pomodoroapp.todofeature.MainActivityTodo;
 import com.example.pomodoroapp.upcomingtasks.MainActivityUpcomingPomodoros;
@@ -29,11 +31,50 @@ public class MainActivity extends AppCompatActivity {
     public static final String CHANNEL_ID = "pomodoroChannel";
     public ImageButton darkModeButton;
     public static boolean isDarkModeOn;
+    ImageView createTask,focusMode,upcomingTask,menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        createTask = findViewById(R.id.create_task);
+        focusMode = findViewById(R.id.focus_mode);
+        upcomingTask = findViewById(R.id.upcoming_task);
+        menu = findViewById(R.id.menu);
+
+        createTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,Create_Task.class);
+                startActivity(intent);
+            }
+        });
+
+        focusMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Focus_Mode.class);
+                startActivity(intent);
+            }
+        });
+
+        upcomingTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,MainActivityUpcomingPomodoros.class);
+                startActivity(intent);
+            }
+        });
+
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,Features_List.class);
+                startActivity(intent);
+            }
+        });
+
         notificationChannel();
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
