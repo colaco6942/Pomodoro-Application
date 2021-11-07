@@ -48,7 +48,7 @@ public class MainActivityHomePage extends AppCompatActivity {
         createTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivityHomePage.this,MainActivityUpcomingPomodoros.class);
+                Intent intent = new Intent(MainActivityHomePage.this, MainActivityTodo.class);
                 startActivity(intent);
             }
         });

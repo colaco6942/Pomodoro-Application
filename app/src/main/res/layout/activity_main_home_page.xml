@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="4dp"
         android:backgroundTint="@color/backgroundColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -80,18 +80,15 @@
 
     <ImageButton
         android:id="@+id/menu"
-        android:layout_width="70dp"
+        android:layout_width="20dp"
         android:layout_height="26dp"
-
         android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        android:background="#00FFFFFF"
-        android:scrollbarSize="40dp"
+        android:backgroundTint="@color/backgroundColor"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.219"
-        app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
+        app:srcCompat="@drawable/ic_baseline_menu_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

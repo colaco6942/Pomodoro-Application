@@ -26,18 +26,26 @@
 
         <activity
             android:name=".on_boarding_screen.OnBoarding"
-            android:exported="true" />
+            android:exported="true"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".focus_mode.Focus_Mode"
-            android:parentActivityName=".MainActivityHomePage"/>
+            android:parentActivityName=".MainActivityHomePage"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".Features_List"
-            android:parentActivityName=".MainActivityHomePage" />
+            android:parentActivityName=".MainActivityHomePage"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".Progress_Manager"
-            android:parentActivityName=".Features_List" />
+            android:parentActivityName=".Features_List"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".todofeature.CalendarActivity"

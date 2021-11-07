@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
 //                }
 //                else{
-//                    Intent intent = new Intent(getApplicationContext(),HomePage.class);
+//                    Intent intent = new Intent(getApplicationContext(), MainActivityHomePage.class);
 //                    startActivity(intent);
 //                    finish();
 //                }

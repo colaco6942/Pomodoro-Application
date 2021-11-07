@@ -6,16 +6,16 @@
     <!--    Strings for on boarding screen-->
 
     <string name="first_slide_title">Timer</string>
-    <string name="second_slide_title">To-do List</string>
+    <string name="second_slide_title">Focus Mode</string>
     <string name="third_slide_title">Create The Task</string>
     <string name="fourth_slide_title">Schedule Manager</string>
 
     <!--    Descriptions for slides-->
 
-    <string name="first_slide_desc">You can set the specific time using timer to complete the task.</string>
-    <string name="second_slide_desc">This App will Provide you the to do list which helps you to list your tasks that you must carry out.</string>
-    <string name="third_slide_desc">We have the option to create task where you can create your task and perform it in a specified time.</string>
-    <string name="fourth_slide_desc">It manages your works so that you can process it with ease.</string>
+    <string name="first_slide_desc">You can set specific time using timer to complete the task.</string>
+    <string name="second_slide_desc">Turning on this feature will block all apps and notification so you can focus on your task.</string>
+    <string name="third_slide_desc">You can create your task, perform it in a specified time, and sort them to your needs.</string>
+    <string name="fourth_slide_desc">You can create schedules to perform more than one task in a specified interval of time.</string>
 
     <!--    Buttons-->
     <string name="skip_btn">Skip</string>

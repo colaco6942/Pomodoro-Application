@@ -46,8 +46,8 @@ public class Features_List extends AppCompatActivity implements RecyclerViewAdap
 
         List<ModalClass> modalClassList = new ArrayList<>();
         modalClassList.add(new ModalClass(R.drawable.round_task_24,"Schedule Manager"));
-        modalClassList.add(new ModalClass(R.drawable.ic_baseline_edit_24,"Create Todo"));
-        modalClassList.add(new ModalClass(R.drawable.ic_outline_assignment_24,"Progress Manager"));
+        modalClassList.add(new ModalClass(R.drawable.ic_outline_assignment_24,"Create Tasks"));
+        modalClassList.add(new ModalClass(R.drawable.ic_baseline_ballot_24,"Progress Manager"));
 
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(modalClassList,this);
         recyclerView.setAdapter(adapter);
