@@ -14,13 +14,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
-import android.view.animation.Animation;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.pomodoroapp.focus_mode.Focus_Mode;
 import com.example.pomodoroapp.schedulemanager.MainActivityScheduleManager;
+import com.example.pomodoroapp.timer.MainActivityTimer;
 import com.example.pomodoroapp.todofeature.MainActivityTodo;
 import com.example.pomodoroapp.upcomingtasks.MainActivityUpcomingPomodoros;
 
@@ -33,6 +33,7 @@ public class MainActivityHomePage extends AppCompatActivity {
     public static final String CHANNEL_ID = "pomodoroChannel";
     public ImageButton darkModeButton;
     public static boolean isDarkModeOn;
+    Button buttonTimer;
     ImageView createTask,focusMode,upcomingTask,menu;
 
     @Override
@@ -44,6 +45,7 @@ public class MainActivityHomePage extends AppCompatActivity {
         focusMode = findViewById(R.id.focus_mode);
         upcomingTask = findViewById(R.id.upcoming_task);
         menu = findViewById(R.id.menu);
+        buttonTimer = findViewById(R.id.button_timer);
 
         createTask.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +67,14 @@ public class MainActivityHomePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivityHomePage.this,MainActivityUpcomingPomodoros.class);
+                startActivity(intent);
+            }
+        });
+
+        buttonTimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivityHomePage.this, MainActivityTimer.class);
                 startActivity(intent);
             }
         });

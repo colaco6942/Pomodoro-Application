@@ -1,4 +1,4 @@
-package com.example.pomodoroapp;
+package com.example.pomodoroapp.progress_tracker;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +8,10 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-public class Progress_Manager extends AppCompatActivity {
+import com.example.pomodoroapp.MainActivityHomePage;
+import com.example.pomodoroapp.R;
+
+public class ProgressTracker extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

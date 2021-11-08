@@ -13,8 +13,12 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.pomodoroapp.focus_mode.Focus_Mode;
+import com.example.pomodoroapp.focus_mode.ModalClass;
+import com.example.pomodoroapp.progress_tracker.ProgressTracker;
 import com.example.pomodoroapp.schedulemanager.MainActivityScheduleManager;
 import com.example.pomodoroapp.todofeature.MainActivityTodo;
+import com.example.pomodoroapp.upcomingtasks.MainActivityUpcomingPomodoros;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +51,8 @@ public class Features_List extends AppCompatActivity implements RecyclerViewAdap
         List<ModalClass> modalClassList = new ArrayList<>();
         modalClassList.add(new ModalClass(R.drawable.round_task_24,"Schedule Manager"));
         modalClassList.add(new ModalClass(R.drawable.ic_outline_assignment_24,"Create Tasks"));
-        modalClassList.add(new ModalClass(R.drawable.ic_baseline_ballot_24,"Progress Manager"));
+        modalClassList.add(new ModalClass(R.drawable.ic_baseline_phonelink_lock_24,"Focus Mode"));
+        modalClassList.add(new ModalClass(R.drawable.ic_baseline_not_started_24,"Upcoming Pomodoros"));
 
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(modalClassList,this);
         recyclerView.setAdapter(adapter);
@@ -67,7 +72,10 @@ public class Features_List extends AppCompatActivity implements RecyclerViewAdap
                 intent = new Intent(context, MainActivityTodo.class);
                 break;
             case 2:
-                intent = new Intent(context,Progress_Manager.class);
+                intent = new Intent(context, Focus_Mode.class);
+                break;
+            case 3:
+                intent = new Intent(context, MainActivityUpcomingPomodoros.class);
                 break;
         }
         context.startActivity(intent);

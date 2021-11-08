@@ -1,4 +1,4 @@
-package com.example.pomodoroapp;
+package com.example.pomodoroapp.focus_mode;
 
 public class ModalClass {
 

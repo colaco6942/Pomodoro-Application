@@ -23,7 +23,7 @@ public class TimeActivity extends AppCompatActivity {
 
         // Creating intent to send the time result to the Main Activity 2
         Intent intent = new Intent(this, CreatePomodoro.class);
-        button = (Button) findViewById(R.id.button);
+        button = (Button) findViewById(R.id.button_timer);
 
         // Initiating the alarm picker to get hour and minute
         alarmTimePicker = (TimePicker) findViewById(R.id.timePicker);
